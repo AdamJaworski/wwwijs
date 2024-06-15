@@ -1,30 +1,5 @@
-import sqlite3
 from data_struct.task import Task
-
-
-def on_database_operation(func):
-    def wrapper(*args, **kwargs):
-        db = sqlite3.connect('../database/data.db')
-        cursor = db.cursor()
-        try:
-            result = func(cursor, *args, **kwargs)
-            db.commit()
-        finally:
-            db.close()
-        return result
-    return wrapper
-
-
-def get_from_database(func):
-    def wrapper(*args, **kwargs):
-        db = sqlite3.connect('../database/data.db')
-        cursor = db.cursor()
-        try:
-            result = func(cursor, *args, **kwargs)
-        finally:
-            db.close()
-        return result
-    return wrapper
+from managers.database_decorators import on_database_operation, get_from_database
 
 
 @on_database_operation
@@ -61,4 +36,9 @@ def get_user_access_level(cursor, username, org_name):
     return access_level[0]
 
 
-add_user('test', 'test')
+@get_from_database
+def get_user_by_username(cursor, username):
+    cursor.execute('SELECT username, password FROM users WHERE username = ?', (username,))
+    user = cursor.fetchone()
+    return user
+
