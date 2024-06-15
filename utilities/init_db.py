@@ -1,21 +1,50 @@
 import sqlite3
 
-db = sqlite3.connect('../database/data.db')
-cursor = db.cursor()
-
 
 def init_data_db():
-    create_users_table = \
-        'CREATE TABLE IF NOT EXISTS users (' \
-        'username TEXT PRIMARY KEY,' \
-        'password TEXT NOT NULL);'
+    db = sqlite3.connect('../database/data.db')
+    cursor = db.cursor()
 
-    create_organizations_table = \
-        'CREATE TABLE IF NOT EXISTS organizations (' \
-        'username TEXT PRIMARY KEY,' \
-        'password TEXT NOT NULL);'
+    create_users_table = '''
+    CREATE TABLE IF NOT EXISTS users (
+        username TEXT PRIMARY KEY,
+        password TEXT NOT NULL
+    );
+    '''
+
+    create_organizations_table = '''
+    CREATE TABLE IF NOT EXISTS organizations (
+        org_name TEXT PRIMARY KEY
+    );
+    '''
+
+    # Create tasks table
+    create_tasks_table = '''
+    CREATE TABLE IF NOT EXISTS tasks (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        table_id INTEGER NOT NULL,
+        description TEXT NOT NULL,
+        org_name TEXT,
+        FOREIGN KEY (org_name) REFERENCES organizations(org_name)
+    );
+    '''
+
+    create_user_organizations_table = '''
+    CREATE TABLE IF NOT EXISTS user_organizations (
+        username TEXT,
+        org_name TEXT,
+        access_level INT NOT NULL,
+        FOREIGN KEY (username) REFERENCES users(username),
+        FOREIGN KEY (org_name) REFERENCES organizations(org_name),
+        PRIMARY KEY (username, org_name)
+    );
+    '''
 
     cursor.execute(create_users_table)
+    cursor.execute(create_organizations_table)
+    cursor.execute(create_tasks_table)
+    cursor.execute(create_user_organizations_table)
+
     db.commit()
     db.close()
 

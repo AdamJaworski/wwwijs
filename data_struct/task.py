@@ -10,13 +10,14 @@ id_list = {
 
 
 class Task:
-    id: str
+    task_id: str
     assigned_to: int
-    title: str
-    task: str
+    description: str
 
-    def __init__(self):
-        self.id = str(uuid4())
+    def __init__(self, task_id, assigned_to, description):
+        self.task_id = task_id
+        self.assigned_to = assigned_to
+        self.description = description
 
     def move_to_right(self):
         self.assigned_to += 1
