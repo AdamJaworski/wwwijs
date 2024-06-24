@@ -1,6 +1,3 @@
-from uuid import uuid4
-
-
 id_list = {
     1: "to_do",
     2: "in_progress",

@@ -24,14 +24,14 @@ def login():
     if request.method == 'GET':
         return render_template('login.html')
 
-    username = request.json.get('username')
-    password = request.json.get('password')
+    username = request.form.get('username')
+    password = request.form.get('password')
 
     user = get_user_by_username(username)
     if user and check_password_hash(user[1], password):
         access_token = create_access_token(identity=username)
         response = make_response(redirect(url_for('dashboard')))
-        set_access_cookies(response, access_token)
+        set_access_cookies(response, access_token, max_age=15 * 60)
         flash('Login successful!', 'success')
         return response
     else:
@@ -44,8 +44,8 @@ def register():
     if request.method == 'GET':
         return render_template('register.html')
 
-    username = request.json.get('username')
-    password = request.json.get('password')
+    username = request.form.get('username')
+    password = request.form.get('password')
 
     if len(username) == 0 or len(password) == 0:
         return "You need to provide both username and password", 401
@@ -71,8 +71,9 @@ def logout():
 @jwt_required()
 def dashboard():
     current_user = get_jwt_identity()
+    #return render_template('dashboard.html')
     return jsonify(logged_in_as=current_user), 200
 
 
 if __name__ == '__main__':
-    app.run()
+    app.run(debug=True)
