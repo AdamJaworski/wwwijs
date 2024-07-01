@@ -71,8 +71,8 @@ def logout():
 @jwt_required()
 def dashboard():
     current_user = get_jwt_identity()
-    #return render_template('dashboard.html')
-    return jsonify(logged_in_as=current_user), 200
+    return render_template('dashboard.html', user = current_user)
+    #return jsonify(logged_in_as=current_user), 200
 
 
 if __name__ == '__main__':
