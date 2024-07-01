@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formularz</title>
+</head>
+<body>
+    <h1>Wypełnij formularz</h1>
+    <form method="POST" action="/create_new_issue">
+        <label for="title">Tytuł:</label>
+        <input type="text" id="title" name="title" maxlength="256" required>
+        <br>
+        <label for="description">Opis:</label>
+        <textarea id="description" name="description" rows="4" cols="50" required></textarea>
+        <br>
+        <button type="submit" class="btn btn-primary">Wyślij</button>
+    </form>
+</body>
+</html>

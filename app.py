@@ -1,7 +1,7 @@
 from flask import Flask, request, jsonify, render_template, url_for, redirect, flash, make_response
 from flask_jwt_extended import JWTManager, create_access_token, jwt_required, get_jwt_identity, set_access_cookies, unset_jwt_cookies
 from werkzeug.security import generate_password_hash, check_password_hash
-from managers.database import get_user_by_username, add_user
+from managers.database import get_user_by_username, add_user, add_task
 from sqlite3 import IntegrityError
 
 app = Flask(__name__)
@@ -74,6 +74,19 @@ def dashboard():
     return render_template('dashboard.html', user = current_user)
     #return jsonify(logged_in_as=current_user), 200
 
+@app.route('/create_new_issue', methods=['POST', 'GET'])
+def create_new_issue():
+    print('pusty print')
+    if request.method == 'GET':
+        return render_template('create_new_issue.html')
+
+    
+    title = request.form.get('title')
+    description = request.form.get('description')
+    print(title, description)
+    add_task(description, "test_org_0")
+
+    return redirect(url_for('create_new_issue'))
 
 if __name__ == '__main__':
     app.run(debug=True)
