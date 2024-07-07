@@ -1,7 +1,7 @@
 from flask import Flask, request, jsonify, render_template, url_for, redirect, flash, make_response
-from flask_jwt_extended import JWTManager, create_access_token, jwt_required, get_jwt_identity, set_access_cookies, unset_jwt_cookies, verify_jwt_in_request
+from flask_jwt_extended import JWTManager, create_access_token, get_jwt_identity, set_access_cookies, unset_jwt_cookies, verify_jwt_in_request
 from werkzeug.security import generate_password_hash, check_password_hash
-from managers.database import get_user_by_username, add_user
+from managers.database import get_user_by_username, add_user, add_task
 from sqlite3 import IntegrityError
 from functools import wraps
 

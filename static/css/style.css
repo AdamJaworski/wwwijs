@@ -24,14 +24,13 @@ html{
   text-align: center;
   height: 5%;
   color: white;
-  margin-top: 25px;
   margin: 1%;
-  margin-bottom: 2%;
 }
 
 .sub_div .lists_parent {
   text-align: center;
-  height: 91%;
+  height: 85%;
+  margin-top: 4%;
   display: flex;
   justify-content: space-around;
   flex-direction: row;

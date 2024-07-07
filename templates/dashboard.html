@@ -3,14 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
+    <title>Dashboard</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 <body class="dashboard">
-    <div class="orgs"></div>
+    <div class="orgs">
+        <a href="/create_new_issue"><button>Utwórz nowy problem</button></a>
+        <a href="/see_canban_board"><button>Zobacz tablicę Kanban</button></a>
+        <a href="/login"><button>Zaloguj się</button></a>
+    </div>
     <div class="sub_div">
-        <h1 class="header">Hello {{username}}!</h1>
+        <div class="header">
+            <h1>Hello {{username}}!</h1>
+            <hr class="my-4" style="color: white">
+        </div>
         <div class="lists_parent">
             <div class="child" id="todo" style="background: #e3e04b"></div>
             <div class="child" id="in_progress" style="background: #5ed13f"></div>
