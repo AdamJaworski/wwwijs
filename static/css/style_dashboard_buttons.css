@@ -11,3 +11,13 @@
   margin: 4px 2px;
   border-radius: 100%;
 }
+
+a {
+  color: rgba(255, 255, 255, .55);
+  text-decoration: none;
+}
+
+a:hover {
+  color: rgba(255, 255, 255, .75);
+  text-decoration: none;
+}
