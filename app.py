@@ -1,7 +1,7 @@
 from flask import Flask, request, jsonify, render_template, url_for, redirect, flash, make_response
 from flask_jwt_extended import JWTManager, create_access_token, get_jwt_identity, set_access_cookies, unset_jwt_cookies, verify_jwt_in_request
 from werkzeug.security import generate_password_hash, check_password_hash
-from managers.database import get_user_by_username, add_user, add_task
+import managers.database as database
 from sqlite3 import IntegrityError
 from functools import wraps
 
@@ -39,7 +39,7 @@ def login():
     username = request.form.get('username')
     password = request.form.get('password')
 
-    user = get_user_by_username(username)
+    user = database.get_user_by_username(username)
     if user and check_password_hash(user[1], password):
         access_token = create_access_token(identity=username)
         response = make_response(redirect(url_for('dashboard')))
@@ -64,7 +64,7 @@ def register():
 
     hashed_password = generate_password_hash(password)
     try:
-        add_user(username, hashed_password)
+        database.add_user(username, hashed_password)
     except IntegrityError:
         return jsonify({"msg": "User already exists"}), 400
 
@@ -83,7 +83,7 @@ def logout():
 @jwt_required_redirect
 def dashboard():
     current_user = get_jwt_identity()
-    return render_template('dashboard.html', username=current_user)
+    return render_template('dashboard.html', username=current_user, database=database)
 
 
 @app.route('/create_new_issue', methods=['POST', 'GET'])
@@ -95,8 +95,24 @@ def create_new_issue():
     title = request.form.get('title')
     description = request.form.get('description')
     print(title, description)
-    add_task(description, "test_org_0")
+    database.add_task(description, "test_org_0")
     return redirect(url_for('create_new_issue'))
+
+
+@app.route('/get_tasks')
+def get_tasks():
+    org = request.args.get('org')
+    tasks = database.get_tasks_for_organization(org)  # Replace with actual database logic
+    print(tasks)
+    tasks_data = [
+        {
+            'task_id': task.task_id,
+            'assigned_to': task.assigned_to,
+            'description': task.description,
+            'title': task.title
+        } for task in tasks
+    ]
+    return jsonify({'tasks': tasks_data})
 
 
 if __name__ == '__main__':

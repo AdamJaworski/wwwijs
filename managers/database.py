@@ -18,13 +18,15 @@ def assign_user_to_organization(cursor, username, org_name, access_level):
 
 
 @on_database_operation
-def add_task(cursor, table_id, description, org_name, priority):
+def add_task(cursor, table_id, description, org_name, priority, title):
     assert 0 < table_id < 5, "Wrong table id"
     assert type(org_name) is str, "Wrong type of org name"
+    assert type(title) is str, "Wrong type of title"
+    assert type(description) is str, "Wrong type of description"
 
     create_date = 0     # TODO create_date
-    cursor.execute('INSERT INTO tasks (table_id, description, org_name, create_date priority) VALUES (?, ?)',
-                   (table_id, description, org_name, create_date, priority))
+    cursor.execute('INSERT INTO tasks (table_id, description, org_name, create_date, priority, title) VALUES (?, ?, ?, ?, ?, ?)',
+                   (table_id, description, org_name, create_date, priority, title))
 
 
 @on_database_operation
@@ -34,9 +36,17 @@ def add_user_to_task(cursor, username, task_id):
 
 @get_from_database
 def get_tasks_for_organization(cursor, org_name):
-    cursor.execute('SELECT id, table_id, description FROM tasks WHERE org_name = ?', (org_name,))
+    cursor.execute('SELECT id, table_id, description, title FROM tasks WHERE org_name = ?', (org_name,))
     tasks = cursor.fetchall()
-    return [Task(task_id=row[0], assigned_to=row[1], description=row[2]) for row in tasks]
+    return [Task(task_id=row[0], assigned_to=row[1], description=row[2], title=row[3]) for row in tasks]
+
+
+@get_from_database
+def get_user_orgs(cursor, username):
+    cursor.execute('SELECT org_name FROM user_organizations WHERE username = ?', (username,))
+    orgs = cursor.fetchall()
+    print(orgs)
+    return [org[0] for org in orgs]
 
 
 @get_from_database

@@ -39,7 +39,6 @@ html{
 }
 
 .sub_div .lists_parent {
-  text-align: center;
   height: 85%;
   margin-top: 4%;
   display: flex;
@@ -50,5 +49,5 @@ html{
 .lists_parent .child {
   vertical-align: middle;
   height: 95%;
-  width: 10%;
+  width: 20%;
 }

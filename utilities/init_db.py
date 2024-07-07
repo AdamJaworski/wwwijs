@@ -28,6 +28,7 @@ def init_data_db():
         org_name TEXT,
         create_date REAL NOT NULL,
         priority INT NOT NULL,
+        title TEXT NOT NULL,
         FOREIGN KEY (org_name) REFERENCES organizations(org_name)
     );
     '''
