@@ -92,13 +92,12 @@ def create_new_issue():
     if request.method == 'GET':
         return render_template('create_new_issue.html')
 
-    
     title = request.form.get('title')
     description = request.form.get('description')
     print(title, description)
     add_task(description, "test_org_0")
-
     return redirect(url_for('create_new_issue'))
+
 
 if __name__ == '__main__':
     app.run(debug=True)
