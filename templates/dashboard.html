@@ -7,20 +7,16 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
-<body style="background: blue">
-    <div class="container" style="text-align: center;">
-        <h2 class="mt-5">Login</h2>
-        <form method="POST" action="/login">
-            <div class="form-group">
-                <label for="username">Username</label>
-                <input type="text" class="form-control" id="username" name="username" required>
-            </div>
-            <div class="form-group">
-                <label for="password">Password</label>
-                <input type="password" class="form-control" id="password" name="password" required>
-            </div>
-            <button type="submit" class="btn btn-primary">Login</button>
-        </form>
+<body class="dashboard">
+    <div class="orgs"></div>
+    <div class="sub_div">
+        <h1 class="header">Hello {{username}}!</h1>
+        <div class="lists_parent">
+            <div class="child" id="todo" style="background: #e3e04b"></div>
+            <div class="child" id="in_progress" style="background: #5ed13f"></div>
+            <div class="child" id="finished" style="background: #d13232"></div>
+            <div class="child" id="in_testing" style="background: #3265b8"></div>
+        </div>
     </div>
 </body>
 </html>
