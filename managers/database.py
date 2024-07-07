@@ -18,8 +18,18 @@ def assign_user_to_organization(cursor, username, org_name, access_level):
 
 
 @on_database_operation
-def add_task(cursor, description, org_name):
-    cursor.execute('INSERT INTO tasks (description, org_name) VALUES (?, ?)', (description, org_name))
+def add_task(cursor, table_id, description, org_name, priority):
+    assert 0 < table_id < 5, "Wrong table id"
+    assert type(org_name) is str, "Wrong type of org name"
+
+    create_date = 0     # TODO create_date
+    cursor.execute('INSERT INTO tasks (table_id, description, org_name, create_date priority) VALUES (?, ?)',
+                   (table_id, description, org_name, create_date, priority))
+
+
+@on_database_operation
+def add_user_to_task(cursor, username, task_id):
+    cursor.execute('INSERT INTO user_task (username, task_id) VALUES (?, ?)', (username, task_id))
 
 
 @get_from_database

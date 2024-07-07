@@ -25,6 +25,8 @@ def init_data_db():
         table_id INTEGER NOT NULL,
         description TEXT NOT NULL,
         org_name TEXT,
+        create_date REAL NOT NULL,
+        priority INT NOT NULL,
         FOREIGN KEY (org_name) REFERENCES organizations(org_name)
     );
     '''
@@ -40,10 +42,20 @@ def init_data_db():
     );
     '''
 
+    create_user_task_table = '''
+    CREATE TABLE IF NOT EXISTS user_task (
+        username TEXT,
+        task_id INTEGER,
+        FOREIGN KEY (username) REFERENCES users(username),
+        FOREIGN KEY (username) REFERENCES tasks(id)
+    );
+    '''
+
     cursor.execute(create_users_table)
     cursor.execute(create_organizations_table)
     cursor.execute(create_tasks_table)
     cursor.execute(create_user_organizations_table)
+    cursor.execute(create_user_task_table)
 
     db.commit()
     db.close()
