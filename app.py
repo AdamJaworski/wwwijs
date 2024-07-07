@@ -1,8 +1,9 @@
 from flask import Flask, request, jsonify, render_template, url_for, redirect, flash, make_response
-from flask_jwt_extended import JWTManager, create_access_token, jwt_required, get_jwt_identity, set_access_cookies, unset_jwt_cookies
+from flask_jwt_extended import JWTManager, create_access_token, get_jwt_identity, set_access_cookies, unset_jwt_cookies, verify_jwt_in_request
 from werkzeug.security import generate_password_hash, check_password_hash
 from managers.database import get_user_by_username, add_user, add_task
 from sqlite3 import IntegrityError
+from functools import wraps
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'test'
@@ -12,6 +13,17 @@ app.config['JWT_COOKIE_SECURE'] = False  # Set to True in production with HTTPS
 app.config['JWT_ACCESS_COOKIE_PATH'] = '/'
 app.config['JWT_COOKIE_CSRF_PROTECT'] = False  # Set to True for additional security
 jwt = JWTManager(app)
+
+
+def jwt_required_redirect(fn):
+    @wraps(fn)
+    def wrapper(*args, **kwargs):
+        try:
+            verify_jwt_in_request()
+        except Exception:
+            return redirect(url_for('login'))
+        return fn(*args, **kwargs)
+    return wrapper
 
 
 @app.route('/')
@@ -68,11 +80,11 @@ def logout():
 
 
 @app.route('/dashboard', methods=['GET'])
-@jwt_required()
+@jwt_required_redirect
 def dashboard():
     current_user = get_jwt_identity()
-    return render_template('dashboard.html', user = current_user)
-    #return jsonify(logged_in_as=current_user), 200
+    return render_template('dashboard.html', username=current_user)
+
 
 @app.route('/create_new_issue', methods=['POST', 'GET'])
 def create_new_issue():
