@@ -8,12 +8,16 @@ def add_user(cursor, username, password):
 
 
 @on_database_operation
-def add_organization(cursor, org_name):
-    cursor.execute('INSERT INTO organizations (org_name) VALUES (?)', (org_name,))
+def add_organization(cursor, org_name, password):
+    cursor.execute('INSERT INTO organizations (org_name, password) VALUES (?, ?)', (org_name, password))
 
 
 @on_database_operation
-def assign_user_to_organization(cursor, username, org_name, access_level):
+def assign_user_to_organization(cursor, username, org_name, access_level=None):
+    assert type(username) is str, "Wrong type of username"
+    assert type(org_name) is str, "Wrong type of org name"
+
+    access_level = 1 if not access_level else access_level
     cursor.execute('INSERT INTO user_organizations (username, org_name, access_level) VALUES (?, ?, ?)', (username, org_name, access_level))
 
 
@@ -71,3 +75,9 @@ def get_user_by_username(cursor, username):
     user = cursor.fetchone()
     return user
 
+
+@get_from_database
+def get_org_by_org_name(cursor, org_name):
+    cursor.execute('SELECT org_name, password FROM organizations WHERE org_name = ?', (org_name,))
+    org = cursor.fetchone()
+    return org
