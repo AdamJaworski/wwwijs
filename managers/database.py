@@ -30,6 +30,11 @@ def add_task(cursor, table_id, description, org_name, priority, title):
 
 
 @on_database_operation
+def update_task_table(cursor, task_id, new_table):
+    cursor.execute('UPDATE tasks SET table_id = ? WHERE id = ?', (new_table, task_id))
+
+
+@on_database_operation
 def add_user_to_task(cursor, username, task_id):
     cursor.execute('INSERT INTO user_task (username, task_id) VALUES (?, ?)', (username, task_id))
 

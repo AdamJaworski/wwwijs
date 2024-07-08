@@ -4,6 +4,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 import managers.database as database
 from sqlite3 import IntegrityError
 from functools import wraps
+from data_struct.task import id_list, table_list
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'test'
@@ -102,8 +103,14 @@ def create_new_issue():
 @app.route('/get_tasks')
 def get_tasks():
     org = request.args.get('org')
-    tasks = database.get_tasks_for_organization(org)  # Replace with actual database logic
-    print(tasks)
+    tasks = database.get_tasks_for_organization(org)
+
+    print(f"Tasks in org {org}:")
+    for task in tasks:
+        print('-'*35)
+        print(task)
+    print('-' * 35)
+
     tasks_data = [
         {
             'task_id': task.task_id,
@@ -113,6 +120,15 @@ def get_tasks():
         } for task in tasks
     ]
     return jsonify({'tasks': tasks_data})
+
+
+@app.route('/update_task_status', methods=['POST'])
+def update_task_status():
+    try:
+        database.update_task_table(request.json['task_id'], table_list[request.json['new_status']])
+        return jsonify({"status": "success"})
+    except Exception as error:
+        return str(error), 400
 
 
 if __name__ == '__main__':

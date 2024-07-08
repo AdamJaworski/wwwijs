@@ -24,10 +24,10 @@
             <hr class="my-4">
         </div>
         <div class="lists_parent">
-            <div class="child" id="todo" style="background: #e3e04b"></div>
-            <div class="child" id="in_progress" style="background: #5ed13f"></div>
-            <div class="child" id="in_testing" style="background: #3265b8"></div>
-            <div class="child" id="finished" style="background: #d13232"></div>
+            <div class="child" id="to_do" style="background: #e3e04b" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+            <div class="child" id="in_progress" style="background: #5ed13f" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+            <div class="child" id="in_testing" style="background: #3265b8" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+            <div class="child" id="finished" style="background: #d13232" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
         </div>
     </div>
     <script src="{{ url_for('static', filename='js/script_dashboard.js') }}"></script>

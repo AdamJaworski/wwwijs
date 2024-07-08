@@ -51,3 +51,25 @@ html{
   height: 95%;
   width: 20%;
 }
+
+.card {
+  width: 90%;
+  margin-left: 5%;
+  margin-right: 5%;
+}
+
+.card[draggable="true"] {
+    cursor: grab;
+}
+
+.card[draggable="true"]:active {
+    cursor: grabbing;
+}
+
+.card-text {
+  font-size: 90%;
+}
+
+.card-header {
+  font-family: cursive;
+}

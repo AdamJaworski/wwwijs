@@ -5,6 +5,12 @@ id_list = {
     4: "finished"
 }
 
+table_list = {
+    "to_do": 1,
+    "in_progress": 2,
+    "in_testing": 3,
+    "finished": 4
+}
 
 class Task:
     task_id: str
