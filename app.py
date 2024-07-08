@@ -102,15 +102,7 @@ def create_new_issue():
 
 @app.route('/get_tasks')
 def get_tasks():
-    org = request.args.get('org')
-    tasks = database.get_tasks_for_organization(org)
-
-    print(f"Tasks in org {org}:")
-    for task in tasks:
-        print('-'*35)
-        print(task)
-    print('-' * 35)
-
+    tasks = database.get_tasks_for_organization(request.args.get('org'))
     tasks_data = [
         {
             'task_id': task.task_id,
@@ -128,7 +120,25 @@ def update_task_status():
         database.update_task_table(request.json['task_id'], table_list[request.json['new_status']])
         return jsonify({"status": "success"})
     except Exception as error:
-        return str(error), 400
+        return jsonify({'success': False, 'error': str(error)})
+
+
+@app.route('/join_org', methods=['POST'])
+def join_org():
+    username   = request.json['username']
+    org_name   = request.json['orgName']
+    org_passwd = request.json['orgPassword']
+
+    org = database.get_org_by_org_name(org_name)
+    if org and check_password_hash(org[1], org_passwd):
+        try:
+            database.assign_user_to_organization(username, org_name)
+            return jsonify({"status": "success"})
+        except Exception as error:
+            return jsonify({'success': False, 'error': error})
+    else:
+        flash('Invalid org name or password' 'danger')
+        return jsonify({'success': False, 'error': 'Invalid org name or password'})
 
 
 if __name__ == '__main__':

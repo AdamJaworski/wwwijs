@@ -1,21 +1,27 @@
 import sqlite3
+import uuid
+import os
+import numpy as np
+from config import DATABASE_PATH
+from managers.database import *
+from werkzeug.security import generate_password_hash
 
 
 def init_data_db():
-    db = sqlite3.connect('../database/data.db')
+    db = sqlite3.connect(DATABASE_PATH)
     cursor = db.cursor()
 
     create_users_table = '''
     CREATE TABLE IF NOT EXISTS users (
         username TEXT PRIMARY KEY,
-        
         password TEXT NOT NULL
     );
     '''
 
     create_organizations_table = '''
     CREATE TABLE IF NOT EXISTS organizations (
-        org_name TEXT PRIMARY KEY
+        org_name TEXT PRIMARY KEY,
+        password TEXT NOT NULL
     );
     '''
 
@@ -63,5 +69,21 @@ def init_data_db():
     db.close()
 
 
+def fill_with_random_orgs():
+    for i in range(1, 5):
+        org_name = org_password = f"example_org{i}"
+        org_password = generate_password_hash(org_password)
+
+        add_organization(org_name, org_password)
+
+        for task_index in range(25):
+            add_task(np.random.randint(1, 4), "Example task created with random fill", org_name, 1, str(uuid.uuid4()))
+
+
 if __name__ == "__main__":
+    try:
+        os.remove(DATABASE_PATH)
+    except Exception:
+        pass
     init_data_db()
+    fill_with_random_orgs()

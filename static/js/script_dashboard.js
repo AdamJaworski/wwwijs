@@ -1,5 +1,6 @@
 {
-    var currentOrg = '';
+    var currentOrg  = '';
+    var currentUser = '';
 }
 
 function toggleSelectedState(event, org) {
@@ -95,4 +96,44 @@ function drop(event) {
         })
 
     .catch(error => console.error('Error updating task status:', error));
+}
+
+
+function openJoinOrgModal() {
+    document.getElementById('joinOrgModal').style.display = 'flex';
+}
+
+function closeJoinOrgModal() {
+    document.getElementById('joinOrgModal').style.display = 'none';
+}
+
+function submitJoinOrgForm(event) {
+    const orgName = document.getElementById('orgName').value;
+    const orgPassword = document.getElementById('orgPassword').value;
+
+    if (orgName == '' || orgPassword == '') {
+        return
+    }
+
+    fetch('/join_org', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            username: currentUser,
+            orgName: orgName,
+            orgPassword: orgPassword
+        })
+    })
+    .then((response) => response.json())
+    .then((json) => {
+        if(json.status){
+            console.log("Added org")
+            closeJoinOrgModal()
+        }
+        else{
+            console.log(json.error)
+        }
+    });
 }
