@@ -141,6 +141,11 @@ def join_org():
     org_name   = request.json['orgName']
     org_passwd = request.json['orgPassword']
 
+    user_orgs = database.get_user_orgs(username)
+
+    if org_passwd in user_orgs:
+        return jsonify({'success': False, 'error': 'User is already assigned to that org'})
+
     org = database.get_org_by_org_name(org_name)
     if org and check_password_hash(org[1], org_passwd):
         try:

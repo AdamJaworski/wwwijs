@@ -80,12 +80,12 @@ html{
 }
 
 .child::-webkit-scrollbar-thumb {
-  background: #888;
+  background: #676767;
 
 }
 
 .child::-webkit-scrollbar-thumb:hover {
-  background: #555;
+  background: #474646;
 }
 
 .card {
@@ -156,12 +156,17 @@ html{
 }
 
 .modal-m-content {
-    background-color: white;
+    background: rgb(51, 68, 71);
+    color: rgb(243, 246, 246);
     border-radius: 5px;
     display: flow;
     align-content: center;
     width: 185px;
     padding: 15px;
+}
+
+input {
+      background: rgb(243, 246, 246);
 }
 
 * {
