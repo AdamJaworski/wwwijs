@@ -92,8 +92,8 @@ function drop(event) {
     .then(response => response.json())
     .then(data => {
         console.log('Task status updated:', data);
+        updateTasks();
     })
-    .catch(error => console.error('Error updating task status:', error));
 
-    updateTasks();
+    .catch(error => console.error('Error updating task status:', error));
 }
