@@ -89,11 +89,10 @@ function drop(event) {
             new_status: newStatus
         })
     })
-    .then(response => response.json())
-    .then(data => {
-        console.log('Task status updated:', data);
-        updateTasks();
-    })
+    .then(response => {
+            response.json();
+            updateTasks()
+        })
 
     .catch(error => console.error('Error updating task status:', error));
 }
