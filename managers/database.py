@@ -43,6 +43,12 @@ def update_task_table(cursor, task_id, new_table):
 def add_user_to_task(cursor, username, task_id):
     cursor.execute('INSERT INTO user_task (username, task_id) VALUES (?, ?)', (username, task_id))
 
+@on_database_operation
+def get_users_from_task(cursor, task_id):
+    # TODO
+    cursor.execute('SELECT username FROM tasks FULL JOIN user_task ON tasks.id = user_task.task_id WHERE task_id = ?', (task_id,))
+    users = cursor.fetchall()
+    return users
 
 @get_from_database
 def get_tasks_for_organization(cursor, org_name):

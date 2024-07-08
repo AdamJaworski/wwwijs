@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Viev all tasks</title>
+</head>
+<body>
+    <div class="container" style="text-align: center;">
+        <h2 class="mt-5">All tasks in yours organizations</h2>
+        {% for org in database.get_user_orgs(username) %}
+        <h2 class="mt-5"> {{ org }} </h2>
+        <div class="lists_parent"></div>
+        {% for task in database.get_tasks_for_organization(org) %}
+        <div class="child" ></div>
+        <h3 class="mt-5"> {{task.title}}</h3>
+        <h4 class="mt-5"> Description:</h4>
+        <p>{{ task.description }} </p>
+        <h4 class="mt-5"> Assigned to:</h4>
+        <p>{{ database.get_users_from_task(task.task_id) }} </p>
+        {% endfor %}
+        {% endfor %}
+</body>    

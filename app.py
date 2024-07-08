@@ -88,15 +88,18 @@ def dashboard():
 
 
 @app.route('/create_new_issue', methods=['POST', 'GET'])
+@jwt_required_redirect
 def create_new_issue():
     print('pusty print')
     if request.method == 'GET':
-        return render_template('create_new_issue.html')
+        current_user = get_jwt_identity()
+        return render_template('create_new_issue.html', username=current_user, database=database)
 
     title = request.form.get('title')
     description = request.form.get('description')
-    print(title, description)
-    database.add_task(description, "test_org_0")
+    organization = request.form.get('organization_name')
+    print(title, description, organization)
+    # database.add_task(description, "test_org_0")
     return redirect(url_for('create_new_issue'))
 
 
@@ -157,6 +160,12 @@ def join_org():
         flash('Invalid org name or password' 'danger')
         return jsonify({'success': False, 'error': 'Invalid org name or password'})
 
-
+@app.route('/viev_all_tasks', methods=['POST', 'GET'])
+@jwt_required_redirect
+def viev_all_tasks():
+    if request.method == 'GET':
+        current_user = get_jwt_identity()
+        return render_template("viev_all_tasks.html", username=current_user, database=database)
+    
 if __name__ == '__main__':
     app.run(debug=True)
