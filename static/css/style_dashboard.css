@@ -63,9 +63,29 @@ html{
 
 .lists_parent .child {
   vertical-align: middle;
+  overflow-y: auto;
+  overflow-x: clip;
+  box-sizing: border-box;
   opacity: 70%;
   height: 95%;
   width: 20%;
+}
+
+.child::-webkit-scrollbar {
+  width: 10px;
+}
+
+.child::-webkit-scrollbar-track {
+  background: inherit;
+}
+
+.child::-webkit-scrollbar-thumb {
+  background: #888;
+
+}
+
+.child::-webkit-scrollbar-thumb:hover {
+  background: #555;
 }
 
 .card {
