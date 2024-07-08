@@ -133,6 +133,12 @@ def update_task_status():
     except Exception as error:
         return str(error), 400
 
-
+@app.route('/viev_all_tasks', methods=['POST', 'GET'])
+@jwt_required_redirect
+def viev_all_tasks():
+    if request.method == 'GET':
+        current_user = get_jwt_identity()
+        return render_template("viev_all_tasks.html", username=current_user, database=database)
+    
 if __name__ == '__main__':
     app.run(debug=True)
