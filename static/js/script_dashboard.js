@@ -27,6 +27,7 @@ function updateTasks() {
         .then(data => {
             data.tasks.forEach(task => {
                 const taskDiv = document.createElement('div');
+                taskDiv.onclick = (event) => openTaskModal(task.task_id);
                 taskDiv.className = 'card mt-3';
                 taskDiv.setAttribute('draggable', true);
                 taskDiv.setAttribute('ondragstart', 'drag(event)');
@@ -156,4 +157,30 @@ function submitJoinOrgForm(event) {
             console.log(json.error)
         }
     });
+}
+
+function openTaskModal(id) {
+    fetch(`/get_task?task_id=${id}`)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            return response.json();
+        })
+        .then(data => {
+            if (!data.task) {
+                throw new Error('Task data is missing');
+            }
+            console.log('Task data:', data.task);
+            document.getElementById('modal-task-title').innerText = data.task.title;
+            document.getElementById('modal-task-description').innerText = data.task.description;
+        })
+        .catch(error => {
+            console.error('Error fetching task data:', error);
+        });
+    document.getElementById('taskModal').style.display = 'flex';
+}
+
+function closeTaskModal() {
+    document.getElementById('taskModal').style.display = 'none';
 }
