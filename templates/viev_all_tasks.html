@@ -17,7 +17,7 @@
         <h4 class="mt-5"> Description:</h4>
         <p>{{ task.description }} </p>
         <h4 class="mt-5"> Assigned to:</h4>
-        <p>{{ task.assigned_to }} </p>
+        <p>{{ database.get_users_from_task(task.task_id) }} </p>
         {% endfor %}
         {% endfor %}
 </body>    

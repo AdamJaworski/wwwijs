@@ -43,9 +43,11 @@ def add_user_to_task(cursor, username, task_id):
     cursor.execute('INSERT INTO user_task (username, task_id) VALUES (?, ?)', (username, task_id))
 
 @on_database_operation
-def get_user_from_task(cursor, task_id):
+def get_users_from_task(cursor, task_id):
     # TODO
-    pass
+    cursor.execute('SELECT username FROM tasks FULL JOIN user_task ON tasks.id = user_task.task_id WHERE task_id = ?', (task_id,))
+    users = cursor.fetchall()
+    return users
 
 @get_from_database
 def get_tasks_for_organization(cursor, org_name):
