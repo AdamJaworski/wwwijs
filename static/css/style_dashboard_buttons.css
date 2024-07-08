@@ -23,14 +23,13 @@ a:hover {
 }
 
 .org_button {
-    color: rgba(255, 255, 255, .95);
+    color: rgba(255, 255, 255, .155);
     text-decoration: none;
     cursor: pointer;
 }
 
 .org_button.selected {
-    color: rgba(255, 255, 255, .155);
-    text-decoration: none;
+    color: rgba(255, 255, 255, .95);
 }
 
 .div_button {
@@ -43,47 +42,6 @@ a:hover {
     color: black;
     margin-left: 45%;
     margin-top: 10px;
-    text-decoration: none;
-    cursor: pointer;
-}
-
-.modal-m {
-    display: none;
-    justify-content: center;
-    align-items: center;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
-}
-
-.modal-m-content {
-    background-color: white;
-    border-radius: 5px;
-    display: flow;
-    align-content: center;
-    width: 185px;
-    padding: 15px;
-}
-
-* {
-    box-sizing: content-box;
-}
-
-.close {
-    position: relative;
-    top: -10px;
-    right: -5px;
-    color: #aaa;
-    font-size: 28px;
-    font-weight: bold;
-}
-
-.close:hover,
-.close:focus {
-    color: black;
     text-decoration: none;
     cursor: pointer;
 }

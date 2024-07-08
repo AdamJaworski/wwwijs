@@ -4,12 +4,12 @@ html{
 
 .dashboard {
   height: 100%;
-  background: #173463;
+  background: rgb(37, 48, 49);
   display: flex;
   flex-direction: row;
 }
 
-.dashboard .orgs {
+.dashboard .side_panel {
   height: 100%;
   width: 10%;
   text-align: center;
@@ -19,12 +19,27 @@ html{
   align-items: center;
 }
 
-.orgs > * {
+.side_panel > * {
   margin: 5%;
 }
 
-.orgs > *:first-child {
+.side_panel > *:first-child {
     margin-top: 15px;
+}
+
+.org_table {
+    background: #35393d;
+    padding: 5%;
+    width: 80%;
+    border-radius: 10px;
+}
+
+.org_table > *:first-child {
+    margin-top: 5px
+}
+
+.org_table > *:last-child {
+    margin-bottom: 5px
 }
 
 .dashboard .sub_div {
@@ -34,7 +49,7 @@ html{
 .sub_div .header {
   text-align: center;
   height: 5%;
-  color: white;
+  color: rgb(243, 246, 246);
   margin: 1%;
 }
 
@@ -48,6 +63,7 @@ html{
 
 .lists_parent .child {
   vertical-align: middle;
+  opacity: 70%;
   height: 95%;
   width: 20%;
 }
@@ -56,6 +72,39 @@ html{
   width: 90%;
   margin-left: 5%;
   margin-right: 5%;
+}
+
+.prio1body {
+    background: rgb(198 181 220);
+}
+
+.prio1header {
+    background: rgb(172, 161, 186);
+}
+
+
+.prio2body {
+    background: rgb(110 211 234);
+}
+
+.prio2header {
+    background: rgb(79, 176, 198);
+}
+
+.prio3body {
+    background: rgb(82 197 195);
+}
+
+.prio3header {
+    background: rgb(55, 147, 146);
+}
+
+.prio4body {
+    background: rgb(94 134 167);
+}
+
+.prio4header {
+    background: rgb(56 87 113);
 }
 
 .card[draggable="true"] {
@@ -72,4 +121,45 @@ html{
 
 .card-header {
   font-family: cursive;
+}
+
+.modal-m {
+    display: none;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.modal-m-content {
+    background-color: white;
+    border-radius: 5px;
+    display: flow;
+    align-content: center;
+    width: 185px;
+    padding: 15px;
+}
+
+* {
+    box-sizing: content-box;
+}
+
+.close {
+    position: relative;
+    top: -10px;
+    right: -5px;
+    color: #aaa;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
 }

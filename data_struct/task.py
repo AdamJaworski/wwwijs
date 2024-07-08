@@ -12,17 +12,20 @@ table_list = {
     "finished": 4
 }
 
+
 class Task:
     task_id: str
     assigned_to: int
     description: str
     title: str
+    priority: int
 
-    def __init__(self, task_id, assigned_to, description, title):
+    def __init__(self, task_id, assigned_to, description, title, priority):
         self.task_id = task_id
         self.assigned_to = assigned_to
         self.description = description
         self.title = title
+        self.priority = priority
 
     def move_to_right(self):
         self.assigned_to += 1

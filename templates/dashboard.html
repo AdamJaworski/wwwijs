@@ -7,17 +7,16 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style_dashboard.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style_dashboard_buttons.css') }}">
+    <script src="{{ url_for('static', filename='js/script_dashboard.js') }}"></script>
 </head>
-<body class="dashboard">
-    <div class="orgs">
+<body class="dashboard" onload="updateOrgs();">
+    <div class="side_panel">
         <button id="profile" class="button"></button>
         <a href="/create_new_issue">Utwórz nowy problem</a>
         <a href="/see_canban_board">Zobacz tablicę Kanban</a>
         <a href="/login">Zaloguj się</a>
         <div class="div_button" onclick="openJoinOrgModal()">Dołącz do organizacji</div>
-        {% for org in database.get_user_orgs(username) %}
-        <div class="org_button" onclick="toggleSelectedState(event, '{{ org }}')" id="{{ org }}">Org {{ org }}</div>
-        {% endfor %}
+        <div class="org_table" id="org_table"></div>
     </div>
     <div class="sub_div">
         <div class="header">
@@ -25,10 +24,10 @@
             <hr class="my-4">
         </div>
         <div class="lists_parent">
-            <div class="child" id="to_do" style="background: #e3e04b" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
-            <div class="child" id="in_progress" style="background: #5ed13f" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
-            <div class="child" id="in_testing" style="background: #3265b8" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
-            <div class="child" id="finished" style="background: #d13232" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+            <div class="child" id="to_do" style="background: rgb(156, 124, 165)" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+            <div class="child" id="in_progress" style="background: rgb(173, 178, 211)" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+            <div class="child" id="in_testing" style="background: rgb(212, 180, 131)" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+            <div class="child" id="finished" style="background: rgb(173, 131, 80)" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
         </div>
     </div>
 
@@ -44,8 +43,5 @@
             <div type="submit" class="div_button_form" onclick="submitJoinOrgForm()">Join</div>
         </div>
     </div>
-
-    <script src="{{ url_for('static', filename='js/script_dashboard.js') }}"></script>
-    <script>currentUser = '{{ username }}';</script>
 </body>
 </html>

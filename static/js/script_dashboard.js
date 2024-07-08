@@ -1,16 +1,17 @@
 {
     var currentOrg  = '';
-    var currentUser = '';
 }
 
 function toggleSelectedState(event, org) {
+    if (currentOrg == org)
+        return
+    currentOrg = org
     const items = document.querySelectorAll('.org_button');
     items.forEach(item => item.classList.remove('selected'));
 
     const element = event.target;
     element.classList.toggle('selected');
 
-    currentOrg = org;
     updateTasks();
 }
 
@@ -35,8 +36,8 @@ function updateTasks() {
                 const taskDivBody = document.createElement('div');
                 const taskDivText = document.createElement('p');
 
-                taskDivHeader.className = 'card-header';
-                taskDivBody.className = 'card-body';
+                taskDivHeader.className = `card-header prio${task.priority}header`;
+                taskDivBody.className = `card-body  prio${task.priority}body`;
                 taskDivText.className = 'card-text';
 
                 taskDivText.innerText = task.description;
@@ -65,6 +66,25 @@ function updateTasks() {
             });
         })
         .catch(error => console.error('Error fetching tasks:', error));
+}
+
+function updateOrgs() {
+    document.getElementById('org_table').innerHTML = '';
+
+    fetch(`/get_orgs`)
+        .then(response => response.json())
+        .then(data => {
+            data.orgs.forEach(org => {
+                var orgDiv = document.createElement('div');
+                orgDiv.className = 'org_button';
+                orgDiv.id = org;
+                orgDiv.onclick = (event) => toggleSelectedState(event, org);
+                orgDiv.innerText = org;
+
+                document.getElementById('org_table').appendChild(orgDiv);
+            });
+        })
+        .catch(error => console.error('Error fetching orgs:', error));
 }
 
 function allowDrop(event) {
@@ -121,7 +141,6 @@ function submitJoinOrgForm(event) {
             'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-            username: currentUser,
             orgName: orgName,
             orgPassword: orgPassword
         })
@@ -129,8 +148,9 @@ function submitJoinOrgForm(event) {
     .then((response) => response.json())
     .then((json) => {
         if(json.status){
-            console.log("Added org")
-            closeJoinOrgModal()
+            console.log("Added org");
+            closeJoinOrgModal();
+            updateOrgs();
         }
         else{
             console.log(json.error)

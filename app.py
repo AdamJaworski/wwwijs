@@ -101,6 +101,7 @@ def create_new_issue():
 
 
 @app.route('/get_tasks')
+@jwt_required_redirect
 def get_tasks():
     tasks = database.get_tasks_for_organization(request.args.get('org'))
     tasks_data = [
@@ -108,13 +109,23 @@ def get_tasks():
             'task_id': task.task_id,
             'assigned_to': task.assigned_to,
             'description': task.description,
-            'title': task.title
+            'title': task.title,
+            'priority': task.priority
         } for task in tasks
     ]
+    tasks_data = sorted(tasks_data, key=lambda x: x['priority'])
     return jsonify({'tasks': tasks_data})
 
 
+@app.route('/get_orgs')
+@jwt_required_redirect
+def get_orgs():
+    orgs = database.get_user_orgs(username=get_jwt_identity())
+    return jsonify({'orgs': orgs})
+
+
 @app.route('/update_task_status', methods=['POST'])
+@jwt_required_redirect
 def update_task_status():
     try:
         database.update_task_table(request.json['task_id'], table_list[request.json['new_status']])
@@ -124,8 +135,9 @@ def update_task_status():
 
 
 @app.route('/join_org', methods=['POST'])
+@jwt_required_redirect
 def join_org():
-    username   = request.json['username']
+    username   = get_jwt_identity()
     org_name   = request.json['orgName']
     org_passwd = request.json['orgPassword']
 

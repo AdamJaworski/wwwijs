@@ -77,7 +77,10 @@ def fill_with_random_orgs():
         add_organization(org_name, org_password)
 
         for task_index in range(25):
-            add_task(np.random.randint(1, 4), "Example task created with random fill", org_name, 1, str(uuid.uuid4()))
+            table_id = np.random.randint(1, 5)
+            prio     = np.random.randint(1, 5)
+            #table_id, description, org_name, priority, title
+            add_task(table_id, "Example task created with random fill", org_name, prio, str(uuid.uuid4()))
 
 
 if __name__ == "__main__":
