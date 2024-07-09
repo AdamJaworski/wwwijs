@@ -24,6 +24,7 @@ def assign_user_to_organization(cursor, username, org_name, access_level=None):
 @on_database_operation
 def add_task(cursor, table_id, description, org_name, priority, title):
     assert 0 < table_id < 5, "Wrong table id"
+    assert 0 < priority < 5, "Wrong priority"
     assert type(org_name) is str, "Wrong type of org name"
     assert type(title) is str, "Wrong type of title"
     assert type(description) is str, "Wrong type of description"
@@ -42,6 +43,7 @@ def update_task_table(cursor, task_id, new_table):
 def add_user_to_task(cursor, username, task_id):
     cursor.execute('INSERT INTO user_task (username, task_id) VALUES (?, ?)', (username, task_id))
 
+
 @on_database_operation
 def get_users_from_task(cursor, task_id):
     # TODO
@@ -49,18 +51,18 @@ def get_users_from_task(cursor, task_id):
     users = cursor.fetchall()
     return [user[0] for user in users]
 
+
 @get_from_database
 def get_tasks_for_organization(cursor, org_name):
-    cursor.execute('SELECT id, table_id, description, title FROM tasks WHERE org_name = ?', (org_name,))
+    cursor.execute('SELECT id, table_id, description, title, priority FROM tasks WHERE org_name = ?', (org_name,))
     tasks = cursor.fetchall()
-    return [Task(task_id=row[0], assigned_to=row[1], description=row[2], title=row[3]) for row in tasks]
+    return [Task(task_id=row[0], assigned_to=row[1], description=row[2], title=row[3], priority=row[4]) for row in tasks]
 
 
 @get_from_database
 def get_user_orgs(cursor, username):
     cursor.execute('SELECT org_name FROM user_organizations WHERE username = ?', (username,))
     orgs = cursor.fetchall()
-    print(orgs)
     return [org[0] for org in orgs]
 
 
@@ -83,3 +85,10 @@ def get_org_by_org_name(cursor, org_name):
     cursor.execute('SELECT org_name, password FROM organizations WHERE org_name = ?', (org_name,))
     org = cursor.fetchone()
     return org
+
+
+@get_from_database
+def get_task_by_id(cursor, task_id):
+    cursor.execute('SELECT id, table_id, description, title, priority FROM tasks WHERE id = ?', (task_id,))
+    row = cursor.fetchall()[0]
+    return Task(task_id=row[0], assigned_to=row[1], description=row[2], title=row[3], priority=row[4])

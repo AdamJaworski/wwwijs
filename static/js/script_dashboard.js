@@ -1,16 +1,17 @@
 {
     var currentOrg  = '';
-    var currentUser = '';
 }
 
 function toggleSelectedState(event, org) {
+    if (currentOrg == org)
+        return
+    currentOrg = org
     const items = document.querySelectorAll('.org_button');
     items.forEach(item => item.classList.remove('selected'));
 
     const element = event.target;
     element.classList.toggle('selected');
 
-    currentOrg = org;
     updateTasks();
 }
 
@@ -26,6 +27,7 @@ function updateTasks() {
         .then(data => {
             data.tasks.forEach(task => {
                 const taskDiv = document.createElement('div');
+                taskDiv.onclick = (event) => openTaskModal(task.task_id);
                 taskDiv.className = 'card mt-3';
                 taskDiv.setAttribute('draggable', true);
                 taskDiv.setAttribute('ondragstart', 'drag(event)');
@@ -35,8 +37,8 @@ function updateTasks() {
                 const taskDivBody = document.createElement('div');
                 const taskDivText = document.createElement('p');
 
-                taskDivHeader.className = 'card-header';
-                taskDivBody.className = 'card-body';
+                taskDivHeader.className = `card-header prio${task.priority}header`;
+                taskDivBody.className = `card-body  prio${task.priority}body`;
                 taskDivText.className = 'card-text';
 
                 taskDivText.innerText = task.description;
@@ -65,6 +67,25 @@ function updateTasks() {
             });
         })
         .catch(error => console.error('Error fetching tasks:', error));
+}
+
+function updateOrgs() {
+    document.getElementById('org_table').innerHTML = '';
+
+    fetch(`/get_orgs`)
+        .then(response => response.json())
+        .then(data => {
+            data.orgs.forEach(org => {
+                var orgDiv = document.createElement('div');
+                orgDiv.className = 'org_button';
+                orgDiv.id = org;
+                orgDiv.onclick = (event) => toggleSelectedState(event, org);
+                orgDiv.innerText = org;
+
+                document.getElementById('org_table').appendChild(orgDiv);
+            });
+        })
+        .catch(error => console.error('Error fetching orgs:', error));
 }
 
 function allowDrop(event) {
@@ -121,7 +142,6 @@ function submitJoinOrgForm(event) {
             'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-            username: currentUser,
             orgName: orgName,
             orgPassword: orgPassword
         })
@@ -129,11 +149,38 @@ function submitJoinOrgForm(event) {
     .then((response) => response.json())
     .then((json) => {
         if(json.status){
-            console.log("Added org")
-            closeJoinOrgModal()
+            console.log("Added org");
+            closeJoinOrgModal();
+            updateOrgs();
         }
         else{
             console.log(json.error)
         }
     });
+}
+
+function openTaskModal(id) {
+    fetch(`/get_task?task_id=${id}`)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            return response.json();
+        })
+        .then(data => {
+            if (!data.task) {
+                throw new Error('Task data is missing');
+            }
+            console.log('Task data:', data.task);
+            document.getElementById('modal-task-title').innerText = data.task.title;
+            document.getElementById('modal-task-description').innerText = data.task.description;
+        })
+        .catch(error => {
+            console.error('Error fetching task data:', error);
+        });
+    document.getElementById('taskModal').style.display = 'flex';
+}
+
+function closeTaskModal() {
+    document.getElementById('taskModal').style.display = 'none';
 }

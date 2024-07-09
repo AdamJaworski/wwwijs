@@ -7,7 +7,7 @@ from functools import wraps
 from data_struct.task import id_list, table_list
 
 app = Flask(__name__)
-app.config['SECRET_KEY'] = 'test'
+app.config['SECRET_KEY'] = '1dd07061-668c-4932-9eea-c81e997d47ed'
 app.config['JWT_SECRET_KEY'] = '3a18fe56-9592-428d-8704-79ad1eae357b'
 app.config['JWT_TOKEN_LOCATION'] = ['cookies']
 app.config['JWT_COOKIE_SECURE'] = False  # Set to True in production with HTTPS
@@ -84,7 +84,7 @@ def logout():
 @jwt_required_redirect
 def dashboard():
     current_user = get_jwt_identity()
-    return render_template('dashboard.html', username=current_user, database=database)
+    return render_template('dashboard.html', username=current_user)
 
 
 @app.route('/create_new_issue', methods=['POST', 'GET'])
@@ -105,6 +105,7 @@ def create_new_issue():
 
 
 @app.route('/get_tasks')
+@jwt_required_redirect
 def get_tasks():
     tasks = database.get_tasks_for_organization(request.args.get('org'))
     tasks_data = [
@@ -112,13 +113,40 @@ def get_tasks():
             'task_id': task.task_id,
             'assigned_to': task.assigned_to,
             'description': task.description,
-            'title': task.title
+            'title': task.title,
+            'priority': task.priority
         } for task in tasks
     ]
+    tasks_data = sorted(tasks_data, key=lambda x: x['priority'])
     return jsonify({'tasks': tasks_data})
 
 
+@app.route('/get_task')
+@jwt_required_redirect
+def get_task():
+    task = database.get_task_by_id(request.args.get('task_id'))
+    if task is None:
+        return jsonify({'error': 'Task not found'}), 404
+
+    tasks_data = {
+        'task_id': task.task_id,
+        'assigned_to': task.assigned_to,
+        'description': task.description,
+        'title': task.title,
+        'priority': task.priority
+    }
+    return jsonify({'task': tasks_data})
+
+
+@app.route('/get_orgs')
+@jwt_required_redirect
+def get_orgs():
+    orgs = database.get_user_orgs(username=get_jwt_identity())
+    return jsonify({'orgs': orgs})
+
+
 @app.route('/update_task_status', methods=['POST'])
+@jwt_required_redirect
 def update_task_status():
     try:
         database.update_task_table(request.json['task_id'], table_list[request.json['new_status']])
@@ -128,10 +156,16 @@ def update_task_status():
 
 
 @app.route('/join_org', methods=['POST'])
+@jwt_required_redirect
 def join_org():
-    username   = request.json['username']
+    username   = get_jwt_identity()
     org_name   = request.json['orgName']
     org_passwd = request.json['orgPassword']
+
+    user_orgs = database.get_user_orgs(username)
+
+    if org_passwd in user_orgs:
+        return jsonify({'success': False, 'error': 'User is already assigned to that org'})
 
     org = database.get_org_by_org_name(org_name)
     if org and check_password_hash(org[1], org_passwd):
@@ -143,6 +177,7 @@ def join_org():
     else:
         flash('Invalid org name or password' 'danger')
         return jsonify({'success': False, 'error': 'Invalid org name or password'})
+
 
 @app.route('/viev_all_tasks', methods=['POST', 'GET'])
 @jwt_required_redirect
