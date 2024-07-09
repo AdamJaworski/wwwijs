@@ -1,0 +1,40 @@
+html{
+    height: 100%;
+  }
+  
+  * {
+      box-sizing: content-box;
+  }
+
+  .create_new_issue {
+    height: 100%;
+    background: rgb(37, 48, 49);
+    display: flex;
+    flex-direction: row;
+  }
+  
+  .create_new_issue .side_panel {
+    height: 100%;
+    width: 10%;
+    text-align: center;
+    background: #212529;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .side_panel > * {
+    margin: 5%;
+  }
+
+  .side_panel > *:first-child {
+      margin-top: 15px;
+  }
+  
+  .form_div {
+    background: rgb(37, 48, 49);
+    color: rgb(243, 246, 246);
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+  }
