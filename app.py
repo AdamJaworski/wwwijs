@@ -101,7 +101,7 @@ def create_new_issue():
     status = int(request.form.get('status'))
     priority = int(request.form.get('priority'))
     database.add_task(status, description, organization, priority, title)
-    return redirect(url_for('create_new_issue'))
+    return redirect(url_for('dashboard'))
 
 
 @app.route('/get_tasks')
