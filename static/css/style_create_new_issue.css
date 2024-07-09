@@ -5,21 +5,15 @@ html{
   * {
       box-sizing: content-box;
   }
-  .main_header{
-    background: rgb(37, 48, 49);
-    text-align: center;
-    display: flex;
-    flex-direction: column;
-  }
-  
-  .main_section {
+
+  .create_new_issue {
     height: 100%;
     background: rgb(37, 48, 49);
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
   }
   
-  .main_section .side_panel {
+  .create_new_issue .side_panel {
     height: 100%;
     width: 10%;
     text-align: center;
@@ -28,26 +22,20 @@ html{
     flex-direction: column;
     align-items: center;
   }
-
-  .side_panel {
-    display: flex;
-    flex-direction: column;
-    background: #212529;
-  }
   
   .side_panel > * {
     margin: 5%;
   }
-  
+
   .side_panel > *:first-child {
       margin-top: 15px;
   }
-
-  .card {
-    width: 18rem
-  }
   
-  .header{
+  .form_div {
+    background: rgb(37, 48, 49);
     color: rgb(243, 246, 246);
-
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    margin: 5%;
   }

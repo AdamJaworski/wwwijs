@@ -1,38 +1,55 @@
 <!DOCTYPE html>
-    <html lang="en">
+<html lang="en">
 
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Formularz</title>
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-    </head>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formularz</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style_create_new_issue.css') }}">
+    <script src="{{ url_for('static', filename='js/script_dashboard.js') }}"></script>
+</head>
 
-    <body>
-        <h1>Wypełnij formularz</h1>
+<body class = "create_new_issue">
+    <div class="side_panel">
+        <button id="profile" class="button"></button>
+        <a href="/create_new_issue">Utwórz nowy problem</a>
+        <a href="/dashboard">Zobacz tablicę Kanban</a>
+        <a href="/viev_all_tasks">Zobacz wszystkie zgłoszenia</a>
+        <a href="/login">Zaloguj się</a>
+        <!-- 
+        <div class="div_button" onclick="openJoinOrgModal('create')">Stwórz organizację</div>
+        <div class="div_button" onclick="openJoinOrgModal('join')">Dołącz do organizacji</div>
+        -->
+    </div>
+    <div class="form_div">
+        
         <form method="POST" action="/create_new_issue">
+            <h1>Wypełnij formularz</h1>
             <label for="title">Tytuł:</label>
-            <input type="text" id="title" name="title" maxlength="256" required>
+            <input type="text" id="title" class="form-control" name="title" maxlength="256" required>
             <br>
             <label for="description">Opis:</label>
-            <textarea id="description" name="description" rows="4" cols="50" required></textarea>
+            <textarea class="form-control" id="description" name="description" rows="4" cols="50" required></textarea>
             <br>
             <label for="organization_name">Set priority</label>
-            <select id="priority" name="priority" >
+            <select class="form-control" id="priority" name="priority">
                 <option value="4">Citical</option>
                 <option value="3">Major</option>
-                <option value="2" selected = "selected">Normal</option>
+                <option value="2" selected="selected">Normal</option>
                 <option value="1">Minor</option>
             </select>
+            <br>
             <label for="organization_name">Set satus</label>
-            <select id="status" name="status" >
-                <option value="1" selected = "selected">To do</option>
+            <select class="form-control" id="status" name="status">
+                <option value="1" selected="selected">To do</option>
                 <option value="2">In progres</option>
                 <option value="3">In testing</option>
                 <option value="4">Finished</option>
             </select>
+            <br>
             <label for="organization_name">Select your organization</label>
-            <select id="organization_name" name="organization_name">
+            <select class="form-control" id="organization_name" name="organization_name">
                 {% for org in database.get_user_orgs(username) %}
                 <option value="{{ org }}">{{ org }}</option>
                 {% endfor %}
@@ -40,6 +57,8 @@
             <br>
             <button type="submit" class="btn btn-primary">Wyślij</button>
         </form>
-    </body>
+    </div>
+    
+</body>
 
-    </html>
+</html>

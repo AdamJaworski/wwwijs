@@ -13,27 +13,45 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style_viev_all_tasks.css') }}">
 </head>
 
-<body>
-    <div class="container" style="text-align: center;">
-
-        <h2 class="mt-5">All tasks in yours organizations</h2>
+<body class="viev_all_tasks">
+    <div class="side_panel">
+        <button id="profile" class="button"></button>
+        <a href="/create_new_issue">Utwórz nowy problem</a>
+        <a href="/dashboard">Zobacz tablicę Kanban</a>
+        <a href="/viev_all_tasks">Zobacz wszystkie zgłoszenia</a>
+        <a href="/login">Zaloguj się</a>
+        <!---
+        <div class="div_button" onclick="openJoinOrgModal('create')">Stwórz organizację</div>
+        <div class="div_button" onclick="openJoinOrgModal('join')">Dołącz do organizacji</div>
+        <div class="org_table" id="org_table"></div>
+        -->
+    </div>
+    <div class="main_header">
+        <h2 class="header">All tasks in yours organizations</h2>
+    </div>
+<div class="main_section" id="main_section" style="text-align: center;">
         {% for org in database.get_user_orgs(username) %}
-        <div class="row">
-            <h2 class="mt-5"> {{ org }} </h2>
+        <div class="row" class="row align-items-start">
+            <h2 class="header"> {{ org }} </h2>
             {% for task in database.get_tasks_for_organization(org) %}
             <div class="col">
-                <h3 class="mt-5"> {{task.title}}</h3>
-                <h4 class="mt-5"> Description:</h4>
-                <p>{{ task.description }} </p>
-                <h4 class="mt-5"> Assigned to:</h4>
-                <p>{{ database.get_users_from_task(task.task_id) }} </p>
-                <form method="POST" action="/viev_all_tasks">
-                    <button type="submit" name="assign_button" value="{{task.task_id}}" class="btn btn-primary">Assign to me</button>
-                </form>
-                
+                <div class="card">
+                    <div class="card-body">
+                        <h3 class="card-title"> {{task.title}}</h3>
+                        <h4 class="mt-5"> Description:</h4>
+                        <p class="card-text">{{ task.description }} </p>
+                        <h4 class="mt-5"> Assigned to:</h4>
+                        <p>{{ database.get_users_from_task(task.task_id) }} </p>
+                        <form method="POST" action="/viev_all_tasks">
+                            <button type="submit" name="assign_button" value="{{task.task_id}}"
+                                class="btn btn-primary">Assign to me</button>
+                        </form>
+                    </div>
+                </div>
             </div>
-        
+
             {% endfor %}
         </div>
         {% endfor %}
+    </div>
 </body>
