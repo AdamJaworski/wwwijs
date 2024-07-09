@@ -2,6 +2,10 @@ html{
   height: 100%;
 }
 
+* {
+    box-sizing: content-box;
+}
+
 .dashboard {
   height: 100%;
   background: rgb(37, 48, 49);
@@ -163,30 +167,11 @@ html{
     align-content: center;
     width: 185px;
     padding: 15px;
+    position: relative;
 }
 
 input {
       background: rgb(243, 246, 246);
-}
-
-* {
-    box-sizing: content-box;
-}
-
-.close {
-    position: relative;
-    top: -10px;
-    right: -5px;
-    color: #aaa;
-    font-size: 28px;
-    font-weight: bold;
-}
-
-.close:hover,
-.close:focus {
-    color: black;
-    text-decoration: none;
-    cursor: pointer;
 }
 
 .modal-task {
@@ -202,11 +187,19 @@ input {
 }
 
 .modal-task-content {
-    background: rgb(73, 117, 120);
     color: rgb(243, 246, 246);
     border-radius: 5px;
     display: flow;
     align-content: center;
     padding: 15px;
     width: 60%;
+    position: relative;
+}
+
+.modal-task-content > * {
+    color: black;
+}
+
+.modal-task-content > *:last-child {
+    margin-bottom: 10px;
 }

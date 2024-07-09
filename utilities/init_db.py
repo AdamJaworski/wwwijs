@@ -70,6 +70,15 @@ def init_data_db():
 
 
 def fill_with_random_orgs():
+    description = """Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin nibh augue, suscipit a, scelerisque sed, lacinia in, mi. 
+    Cras vel lorem. Etiam pellentesque aliquet tellus. Phasellus pharetra nulla ac diam. Quisque semper justo at risus. 
+    Donec venenatis, turpis vel hendrerit interdum, dui ligula ultricies purus, sed posuere libero dui id orci. 
+    Nam congue, pede vitae dapibus aliquet, elit magna vulputate arcu, vel tempus metus leo non est. 
+    Etiam sit amet lectus quis est congue mollis. Phasellus congue lacus eget neque. 
+    Phasellus ornare, ante vitae consectetuer consequat, purus sapien ultricies dolor, et mollis pede metus eget nisi. 
+    Praesent sodales velit quis augue. Cras suscipit, urna at aliquam rhoncus, urna quam viverra nisi, in interdum massa nibh nec erat.
+    """
+
     for i in range(1, 5):
         org_name = org_password = f"example_org{i}"
         org_password = generate_password_hash(org_password)
@@ -80,7 +89,7 @@ def fill_with_random_orgs():
             table_id = np.random.randint(1, 5)
             prio     = np.random.randint(1, 5)
             #table_id, description, org_name, priority, title
-            add_task(table_id, "Example task created with random fill", org_name, prio, str(uuid.uuid4()))
+            add_task(table_id, description, org_name, prio, str(uuid.uuid4()))
 
 
 if __name__ == "__main__":

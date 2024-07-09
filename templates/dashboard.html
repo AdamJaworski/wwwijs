@@ -46,11 +46,18 @@
     </div>
 
     <div id="taskModal" class="modal-task">
-        <div class="modal-task-content">
+        <div class="modal-task-content" id="modal-task-content">
             <span class="close" onclick="closeTaskModal()">&times;</span>
+
             <div id="modal-task-title" style="font-size: 150%;"></div>
             <hr class="my-4">
             <div id="modal-task-description"></div>
+            <div id="modal-task-priority"></div>
+
+            <div class="buttons">
+                <button class="button-action" role="button">Edit</button>
+                <button class="button-action" role="button" style="margin-left: 5px">Delete</button>
+            </div>
         </div>
     </div>
 </body>
