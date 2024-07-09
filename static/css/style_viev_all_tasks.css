@@ -40,9 +40,18 @@ html{
 
 .heder {
     color: aliceblue;
+    margin-top: 4rem;
 }
 
 .main_section{
     margin-left: 12%;
 }
 
+.row {
+    margin-top: 2rem;
+}
+
+a {
+    color: rgba(255, 255, 255, .55);
+    text-decoration: none;
+}
