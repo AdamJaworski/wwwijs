@@ -4,35 +4,31 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Viev all tasks</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
-        crossorigin="anonymous"></script>
+    <title>Formularz</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style_viev_all_tasks.css') }}">
+    <script src="{{ url_for('static', filename='js/script_dashboard.js') }}"></script>
 </head>
 
-<body class="viev_all_tasks">
+<body class="tasks_list">
     <div class="side_panel">
         <button id="profile" class="button"></button>
         <a href="/create_new_issue">Utwórz nowy problem</a>
         <a href="/dashboard">Zobacz tablicę Kanban</a>
         <a href="/viev_all_tasks">Zobacz wszystkie zgłoszenia</a>
         <a href="/login">Zaloguj się</a>
-        <!---
+        <!-- 
         <div class="div_button" onclick="openJoinOrgModal('create')">Stwórz organizację</div>
         <div class="div_button" onclick="openJoinOrgModal('join')">Dołącz do organizacji</div>
-        <div class="org_table" id="org_table"></div>
         -->
     </div>
-    <div class="main_header">
-        <h2 class="header">All tasks in yours organizations</h2>
-    </div>
-<div class="main_section" id="main_section" style="text-align: center;">
+
+
+    <div class="main_section" id="main_section" style="text-align: center;">
+        <h1 class="heder"> Organizations and tasks</h1>
         {% for org in database.get_user_orgs(username) %}
-        <div class="row" class="row align-items-start">
-            <h2 class="header"> {{ org }} </h2>
+        <h2 class="heder"> {{ org }} </h2>
+        <div class="row" >
             {% for task in database.get_tasks_for_organization(org) %}
             <div class="col">
                 <div class="card">
@@ -54,4 +50,7 @@
         </div>
         {% endfor %}
     </div>
+
 </body>
+
+</html>
