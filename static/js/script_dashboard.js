@@ -218,6 +218,7 @@ function openTaskModal(id) {
             document.getElementById('modal-task-description').innerText = data.task.description;
             document.getElementById('modal-task-priority').innerText = `\nPriority: ${data.task.priority}`;
             document.getElementById('modal-task-assigned_to').innerText = `Status: ${data.task.assigned_to}`;
+            document.getElementById('delete-button').onclick = (event) => dasdnai(task.task_id);
         })
         .catch(error => {
             console.error('Error fetching task data:', error);
