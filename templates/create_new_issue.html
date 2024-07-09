@@ -5,6 +5,7 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Formularz</title>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     </head>
 
     <body>
@@ -16,6 +17,21 @@
             <label for="description">Opis:</label>
             <textarea id="description" name="description" rows="4" cols="50" required></textarea>
             <br>
+            <label for="organization_name">Set priority</label>
+            <select id="priority" name="priority" >
+                <option value="1">Citical</option>
+                <option value="2">Major</option>
+                <option value="3" selected = "selected">Normal</option>
+                <option value="4">Minor</option>
+                <option value="5">None</option>
+            </select>
+            <label for="organization_name">Set satus</label>
+            <select id="status" name="status" >
+                <option value="1" selected = "selected">To do</option>
+                <option value="2">In progres</option>
+                <option value="3">In testing</option>
+                <option value="4">Finished</option>
+            </select>
             <label for="organization_name">Select your organization</label>
             <select id="organization_name" name="organization_name">
                 {% for org in database.get_user_orgs(username) %}

@@ -1,23 +1,39 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Viev all tasks</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style_viev_all_tasks.css') }}">
 </head>
+
 <body>
     <div class="container" style="text-align: center;">
+
         <h2 class="mt-5">All tasks in yours organizations</h2>
         {% for org in database.get_user_orgs(username) %}
-        <h2 class="mt-5"> {{ org }} </h2>
-        <div class="lists_parent"></div>
-        {% for task in database.get_tasks_for_organization(org) %}
-        <div class="child" ></div>
-        <h3 class="mt-5"> {{task.title}}</h3>
-        <h4 class="mt-5"> Description:</h4>
-        <p>{{ task.description }} </p>
-        <h4 class="mt-5"> Assigned to:</h4>
-        <p>{{ database.get_users_from_task(task.task_id) }} </p>
+        <div class="row">
+            <h2 class="mt-5"> {{ org }} </h2>
+            {% for task in database.get_tasks_for_organization(org) %}
+            <div class="col">
+                <h3 class="mt-5"> {{task.title}}</h3>
+                <h4 class="mt-5"> Description:</h4>
+                <p>{{ task.description }} </p>
+                <h4 class="mt-5"> Assigned to:</h4>
+                <p>{{ database.get_users_from_task(task.task_id) }} </p>
+                <form method="POST" action="/viev_all_tasks">
+                    <button type="submit" name="assign_button" value="{{task.task_id}}" class="btn btn-primary">Assign to me</button>
+                </form>
+                
+            </div>
+        
+            {% endfor %}
+        </div>
         {% endfor %}
-        {% endfor %}
-</body>    
+</body>

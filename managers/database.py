@@ -26,7 +26,7 @@ def assign_user_to_organization(cursor, username, org_name, access_level=None):
 @on_database_operation
 def add_task(cursor, table_id, description, org_name, priority, title):
     assert 0 < table_id < 5, "Wrong table id"
-    assert 0 < priority < 5, "Wrong priority"
+    assert 0 < priority < 5, "Wrong priority" # TODO: to nie miało buć do 4? ? 
     assert type(org_name) is str, "Wrong type of org name"
     assert type(title) is str, "Wrong type of title"
     assert type(description) is str, "Wrong type of description"
@@ -48,10 +48,9 @@ def add_user_to_task(cursor, username, task_id):
 
 @on_database_operation
 def get_users_from_task(cursor, task_id):
-    # TODO
     cursor.execute('SELECT username FROM tasks FULL JOIN user_task ON tasks.id = user_task.task_id WHERE task_id = ?', (task_id,))
     users = cursor.fetchall()
-    return users
+    return [user[0] for user in users]
 
 
 @get_from_database
