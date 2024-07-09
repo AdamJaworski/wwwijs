@@ -98,9 +98,9 @@ def create_new_issue():
     title = request.form.get('title')
     description = request.form.get('description')
     organization = request.form.get('organization_name')
-    print(title, description, organization)
-    # Todo: w końcu to zrobić
-    # database.add_task(description, "test_org_0")
+    status = int(request.form.get('status'))
+    priority = int(request.form.get('priority'))
+    database.add_task(status, description, organization, priority, title)
     return redirect(url_for('create_new_issue'))
 
 
