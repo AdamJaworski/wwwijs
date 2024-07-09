@@ -121,7 +121,15 @@ function drop(event) {
 }
 
 
-function openJoinOrgModal() {
+function openJoinOrgModal(type) {
+    if (type == 'create') {
+        document.getElementById('join').style.display = 'None';
+        document.getElementById('create').style.display = 'block';
+    }
+    if (type == 'join') {
+        document.getElementById('create').style.display = 'None';
+        document.getElementById('join').style.display = 'block';
+    }
     document.getElementById('joinOrgModal').style.display = 'flex';
 }
 
@@ -151,6 +159,37 @@ function submitJoinOrgForm(event) {
     .then((json) => {
         if(json.status){
             console.log("Added org");
+            closeJoinOrgModal();
+            updateOrgs();
+        }
+        else{
+            console.log(json.error)
+        }
+    });
+}
+
+function submitCreateOrgForm(event) {
+    const orgName = document.getElementById('orgName').value;
+    const orgPassword = document.getElementById('orgPassword').value;
+
+    if (orgName == '' || orgPassword == '') {
+        return
+    }
+
+    fetch('/create_org', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            orgName: orgName,
+            orgPassword: orgPassword
+        })
+    })
+    .then((response) => response.json())
+    .then((json) => {
+        if(json.status){
+            console.log(json.msg);
             closeJoinOrgModal();
             updateOrgs();
         }

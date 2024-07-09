@@ -40,7 +40,8 @@ a:hover {
 
 .div_button_form {
     color: rgb(243, 246, 246);
-    margin-left: 45%;
+    position: absolute;
+    left: 40%;
     margin-top: 10px;
     text-decoration: none;
     cursor: pointer;

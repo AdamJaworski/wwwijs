@@ -18,6 +18,8 @@ def assign_user_to_organization(cursor, username, org_name, access_level=None):
     assert type(org_name) is str, "Wrong type of org name"
 
     access_level = 1 if not access_level else access_level
+    assert 0 < access_level < 6, "Wrong level of access"
+
     cursor.execute('INSERT INTO user_organizations (username, org_name, access_level) VALUES (?, ?, ?)', (username, org_name, access_level))
 
 

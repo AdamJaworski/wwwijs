@@ -16,7 +16,8 @@
         <a href="/see_canban_board">Zobacz tablicę Kanban</a>
         <a href="/viev_all_tasks">Zobacz wszystkie zgłoszenia</a>
         <a href="/login">Zaloguj się</a>
-        <div class="div_button" onclick="openJoinOrgModal()">Dołącz do organizacji</div>
+        <div class="div_button" onclick="openJoinOrgModal('create')">Stwórz organizację</div>
+        <div class="div_button" onclick="openJoinOrgModal('join')">Dołącz do organizacji</div>
         <div class="org_table" id="org_table"></div>
     </div>
     <div class="sub_div">
@@ -41,7 +42,8 @@
                 <label for="orgPassword">Organization Password:</label>
                 <input type="password" id="orgPassword" name="orgPassword" required>
             </form>
-            <div type="submit" class="div_button_form" onclick="submitJoinOrgForm()">Join</div>
+            <div type="submit" class="div_button_form" onclick="submitJoinOrgForm()" id="join" style="left: 45%">Join</div>
+            <div type="submit" class="div_button_form" onclick="submitCreateOrgForm()" id="create">Create</div>
         </div>
     </div>
 

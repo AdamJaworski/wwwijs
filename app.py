@@ -149,9 +149,9 @@ def get_orgs():
 def update_task_status():
     try:
         database.update_task_table(request.json['task_id'], table_list[request.json['new_status']])
-        return jsonify({"status": "success"})
+        return jsonify({'status': True})
     except Exception as error:
-        return jsonify({'success': False, 'error': str(error)})
+        return jsonify({'status': False, 'error': str(error)})
 
 
 @app.route('/join_org', methods=['POST'])
@@ -164,18 +164,35 @@ def join_org():
     user_orgs = database.get_user_orgs(username)
 
     if org_passwd in user_orgs:
-        return jsonify({'success': False, 'error': 'User is already assigned to that org'})
+        return jsonify({'status': False, 'error': 'User is already assigned to that org'})
 
     org = database.get_org_by_org_name(org_name)
     if org and check_password_hash(org[1], org_passwd):
         try:
             database.assign_user_to_organization(username, org_name)
-            return jsonify({"status": "success"})
-        except Exception as error:
-            return jsonify({'success': False, 'error': error})
+            return jsonify({'status': True})
+        except IntegrityError:
+            return jsonify({'status': False, 'error': 'User is already part of this organization'})
     else:
         flash('Invalid org name or password' 'danger')
-        return jsonify({'success': False, 'error': 'Invalid org name or password'})
+        return jsonify({'status': False, 'error': 'Invalid org name or password'})
+
+
+@app.route('/create_org', methods=['POST'])
+@jwt_required_redirect
+def create_org():
+    username   = get_jwt_identity()
+    org_name   = request.json['orgName']
+    org_passwd = request.json['orgPassword']
+
+    hashed_password = generate_password_hash(org_passwd)
+    try:
+        database.add_organization(org_name, hashed_password)
+    except IntegrityError:
+        return jsonify({'status': False, "msg": "Organization already exists"}), 400
+
+    database.assign_user_to_organization(username, org_name, 5)
+    return jsonify({'status': True, "msg": "Organization created successfully"}), 201
 
 
 @app.route('/viev_all_tasks', methods=['POST', 'GET'])
