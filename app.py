@@ -211,5 +211,24 @@ def viev_all_tasks():
         response = make_response(redirect(url_for('viev_all_tasks')))
         return response
 
+
+@app.route('/delete_task', methods=['POST'])
+@jwt_required_redirect
+def delete_task():
+    username = get_jwt_identity()
+    user_orgs = database.get_user_orgs(username)
+    task_id = request.json.get('task_id')
+    org_task = database.get_org_by_org_task_id(task_id)
+
+    if org_task not in user_orgs:
+        return jsonify({'status': False, "msg": "User is not in org related to task"}), 400
+
+    if database.get_user_access_level(username, org_task) < 5:
+        return jsonify({'status': False, "msg": "You don't have enough permission to delete tasks!"}), 400
+
+    database.delete_task(task_id)
+    return jsonify({'status': True}), 201
+
+
 if __name__ == '__main__':
     app.run(debug=True)

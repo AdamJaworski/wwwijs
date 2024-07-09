@@ -42,6 +42,16 @@ def update_task_table(cursor, task_id, new_table):
 
 
 @on_database_operation
+def change_user_permission(cursor, username, org_name, access_lvl):
+    cursor.execute('UPDATE user_organizations SET access_level = ? WHERE username = ? AND org_name = ?', (access_lvl, username, org_name))
+
+
+@on_database_operation
+def delete_task(cursor, task_id):
+    cursor.execute('DELETE FROM tasks WHERE id = ?', (task_id, ))
+
+
+@on_database_operation
 def add_user_to_task(cursor, username, task_id):
     cursor.execute('INSERT INTO user_task (username, task_id) VALUES (?, ?)', (username, task_id))
 
@@ -86,6 +96,13 @@ def get_org_by_org_name(cursor, org_name):
     cursor.execute('SELECT org_name, password FROM organizations WHERE org_name = ?', (org_name,))
     org = cursor.fetchone()
     return org
+
+
+@get_from_database
+def get_org_by_org_task_id(cursor, task_id):
+    cursor.execute('SELECT org_name FROM tasks WHERE id = ?', (task_id,))
+    org = cursor.fetchone()
+    return org[0]
 
 
 @get_from_database
