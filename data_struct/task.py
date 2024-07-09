@@ -1,8 +1,8 @@
 id_list = {
-    1: "to_do",
-    2: "in_progress",
-    3: "in_testing",
-    4: "finished"
+    1: "To Do",
+    2: "In Progress",
+    3: "In Testing",
+    4: "Finished"
 }
 
 table_list = {

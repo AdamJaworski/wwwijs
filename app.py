@@ -130,7 +130,7 @@ def get_task():
 
     tasks_data = {
         'task_id': task.task_id,
-        'assigned_to': task.assigned_to,
+        'assigned_to': id_list[task.assigned_to],
         'description': task.description,
         'title': task.title,
         'priority': task.priority
