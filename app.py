@@ -99,6 +99,7 @@ def create_new_issue():
     description = request.form.get('description')
     organization = request.form.get('organization_name')
     print(title, description, organization)
+    # Todo: w końcu to zrobić
     # database.add_task(description, "test_org_0")
     return redirect(url_for('create_new_issue'))
 
@@ -146,9 +147,17 @@ def join_org():
 @app.route('/viev_all_tasks', methods=['POST', 'GET'])
 @jwt_required_redirect
 def viev_all_tasks():
+
+    current_user = get_jwt_identity()
     if request.method == 'GET':
-        current_user = get_jwt_identity()
         return render_template("viev_all_tasks.html", username=current_user, database=database)
     
+    elif request.method == 'POST':
+        task_to_assign = request.form.get('assign_button')
+        if current_user not in database.get_users_from_task(task_to_assign):
+            database.add_user_to_task(current_user, task_to_assign)
+        response = make_response(redirect(url_for('viev_all_tasks')))
+        return response
+
 if __name__ == '__main__':
     app.run(debug=True)

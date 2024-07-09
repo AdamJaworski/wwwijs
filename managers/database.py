@@ -47,7 +47,7 @@ def get_users_from_task(cursor, task_id):
     # TODO
     cursor.execute('SELECT username FROM tasks FULL JOIN user_task ON tasks.id = user_task.task_id WHERE task_id = ?', (task_id,))
     users = cursor.fetchall()
-    return users
+    return [user[0] for user in users]
 
 @get_from_database
 def get_tasks_for_organization(cursor, org_name):
