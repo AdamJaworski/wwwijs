@@ -66,7 +66,7 @@ function updateTasks() {
 }
 
 function updateOrgs() {
-    document.getElementById('org_table').innerHTML = '';
+    document.getElementById('org-table').innerHTML = '';
 
         fetch('/get_orgs', {
             method: 'POST',
@@ -88,7 +88,7 @@ function updateOrgs() {
                 orgDiv.onclick = (event) => toggleSelectedState(event, org);
                 orgDiv.innerText = org;
 
-                document.getElementById('org_table').appendChild(orgDiv);
+                document.getElementById('org-table').appendChild(orgDiv);
             });
         })
         .catch(error => console.error('Error fetching orgs:', error));

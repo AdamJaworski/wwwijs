@@ -15,18 +15,18 @@
     right: 1%;
 }
 
-.org_table {
+.org-table {
     background: #35393d;
     padding: 5%;
     width: 80%;
     border-radius: 10px;
 }
 
-.org_table > *:first-child {
+.org-table > *:first-child {
     margin-top: 5px
 }
 
-.org_table > *:last-child {
+.org-table > *:last-child {
     margin-bottom: 5px
 }
 
@@ -75,10 +75,12 @@
 
 .card-text {
   font-size: 90%;
+  color: black;
 }
 
 .card-header {
   font-family: cursive;
+  color: black;
 }
 
 .prio1body {

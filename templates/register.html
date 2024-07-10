@@ -6,20 +6,21 @@
     <title>Login</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style_common.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style_common_buttons.css') }}">
 </head>
 <body>
     <div class="container" style="text-align: center;">
-        <h2 class="mt-5">Register</h2>
+        <h2 class="mt-5" style="color: rgb(243, 246, 246);">Register</h2>
         <form method="POST" action="/register">
             <div class="form-group">
-                <label for="username">Username</label>
+                <label for="username" style="color: rgb(243, 246, 246);">Username</label>
                 <input type="text" class="form-control" id="username" name="username" required>
             </div>
             <div class="form-group">
-                <label for="password">Password</label>
+                <label for="password" style="color: rgb(243, 246, 246);">Password</label>
                 <input type="password" class="form-control" id="password" name="password" required>
             </div>
-            <button type="submit" class="btn btn-primary">Register</button>
+            <button type="submit" class="action-button">Register</button>
         </form>
     </div>
 </body>

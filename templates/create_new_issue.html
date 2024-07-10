@@ -12,7 +12,8 @@
     <script src="{{ url_for('static', filename='js/script_common.js') }}"></script>
 </head>
 
-<body class="create_new_issue">
+<body>
+
     <div class="side-panel">
         <button id="profile" class="profile"></button>
         <div class="side-panel-button" onclick='href_js("/dashboard")'>Zobacz tablicę Kanban</div>
@@ -21,7 +22,7 @@
         <div class="side-panel-button" onclick='logout()'>Wyloguj się</div>
     </div>
 
-    <div class="main-panel form-div">
+    <div class="main-panel form-div" style="color: rgb(243, 246, 246);">
         <form method="POST" action="/create_new_issue">
             <h1>Wypełnij formularz</h1>
             <label for="title">Tytuł:</label>
