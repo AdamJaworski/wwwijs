@@ -9,9 +9,8 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style_common_buttons.css') }}">
 </head>
 <body>
-
-    <div class="container" style="text-align: center;">
-        <h2 class="mt-5" style="color: rgb(243, 246, 246)">Login</h2>
+    <div class="side-panel">
+                <h2 class="mt-5" style="color: rgb(243, 246, 246)">Login</h2>
         <form method="POST" action="/login">
             <div class="form-group">
                 <label for="username" style="color: rgb(243, 246, 246)">Username</label>
@@ -25,6 +24,9 @@
         </form>
         <p style="color: rgb(243, 246, 246);">Dont have account? Register here!</p>
         <a href="/register">Register</a>
+    </div>
+    <div class="main-panel">
+
     </div>
 </body>
 </html>
