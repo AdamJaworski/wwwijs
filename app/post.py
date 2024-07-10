@@ -11,13 +11,25 @@ def login():
     user = database.get_user_by_username(username)
     if user and check_password_hash(user[1], password):
         access_token = create_access_token(identity=username)
+        refresh_token = create_refresh_token(identity=username)
         response = make_response(redirect(url_for('get.dashboard')))
         set_access_cookies(response, access_token)
+        set_refresh_cookies(response, refresh_token)
         flash('Login successful!', 'success')
         return response
     else:
         flash('Invalid username or password', 'danger')
         return redirect(url_for('get.login'))
+
+
+@post.route('/refresh', methods=['POST'])
+@jwt_required(refresh=True)
+def refresh():
+    identity = get_jwt_identity()
+    access_token = create_access_token(identity=identity)
+    response = jsonify({"msg": "Token refreshed"})
+    set_access_cookies(response, access_token)
+    return response
 
 
 @post.route('/register', methods=['POST'])

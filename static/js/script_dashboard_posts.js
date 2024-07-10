@@ -15,6 +15,11 @@ function updateTasks() {
     })
     .then(response => response.json())
     .then(data => {
+        if (!data.status) {
+            if(data.redirect) {
+                window.location.href = data.redirect;
+            }
+        }
         data.tasks.forEach(task => {
             const taskDiv = document.createElement('div');
             taskDiv.onclick = (event) => openTaskModal(task.task_id);
@@ -71,6 +76,11 @@ function updateOrgs() {
         })
         .then(response => response.json())
         .then(data => {
+            if (!data.status) {
+                if(data.redirect) {
+                    window.location.href = data.redirect;
+                }
+            }
             data.orgs.forEach(org => {
                 var orgDiv = document.createElement('div');
                 orgDiv.className = 'org_button';
@@ -99,10 +109,17 @@ function drop(event) {
             new_status: newStatus
         })
     })
-    .then(response => {
-            response.json();
+    .then(response => response.json())
+    .then(data => {
+        if (!data.status) {
+            if(data.redirect) {
+                window.location.href = data.redirect;
+            }
+        }
+        else {
             updateTasks()
-        })
+        }
+    })
 
     .catch(error => console.error('Error updating task status:', error));
 }
@@ -126,14 +143,18 @@ function submitJoinOrgForm(event) {
         })
     })
     .then((response) => response.json())
-    .then((json) => {
-        if(json.status){
-            console.log("Added org");
+    .then(data => {
+        if (!data.status) {
+            if(data.redirect) {
+                window.location.href = data.redirect;
+            }
+            if(data.error) {
+                console.log(data.error)
+            }
+        }
+        if(data.status){
             closeJoinOrgModal();
             updateOrgs();
-        }
-        else{
-            console.log(json.error)
         }
     });
 }
