@@ -180,12 +180,12 @@ def delete_task():
     return jsonify({'status': True}), 201
 
 
-@post.route('/viev_all_tasks', methods=['POST'])
+@post.route('/view_all_tasks', methods=['POST'])
 @jwt_required_redirect
-def viev_all_tasks():
+def view_all_tasks():
     current_user = get_jwt_identity()
     task_to_assign = request.form.get('assign_button')
     if current_user not in database.get_users_from_task(task_to_assign):
         database.add_user_to_task(current_user, task_to_assign)
-    response = make_response(redirect(url_for('viev_all_tasks')))
+    response = make_response(redirect(url_for('get.view_all_tasks')))
     return response

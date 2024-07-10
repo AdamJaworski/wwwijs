@@ -32,11 +32,11 @@ def create_new_issue():
     return render_template('create_new_issue.html', username=current_user, database=database)
 
 
-@get.route('/viev_all_tasks', methods=['GET'])
+@get.route('/view_all_tasks', methods=['GET'])
 @jwt_required_redirect
-def viev_all_tasks():
+def view_all_tasks():
     current_user = get_jwt_identity()
-    return render_template("viev_all_tasks.html", username=current_user, database=database)
+    return render_template("view_all_tasks.html", username=current_user, database=database)
 
 
 
