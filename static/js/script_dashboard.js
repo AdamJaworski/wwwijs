@@ -11,6 +11,7 @@ function toggleSelectedState(event, org) {
 
     const element = event.target;
     element.classList.toggle('selected');
+    document.getElementById('main-sign').innerHTML = `Tablica ${org}`
 
     updateTasks();
 }
@@ -251,4 +252,14 @@ function deleteTask(task_id) {
     .catch(error => {
         console.error('Error:', error);
     });
+}
+
+function logout() {
+    fetch('/logout', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    })
+    window.location.href = '/login'
 }

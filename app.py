@@ -5,6 +5,7 @@ import managers.database as database
 from sqlite3 import IntegrityError
 from functools import wraps
 from data_struct.task import id_list, table_list
+from datetime import timedelta
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = '1dd07061-668c-4932-9eea-c81e997d47ed'
@@ -13,6 +14,7 @@ app.config['JWT_TOKEN_LOCATION'] = ['cookies']
 app.config['JWT_COOKIE_SECURE'] = False  # Set to True in production with HTTPS
 app.config['JWT_ACCESS_COOKIE_PATH'] = '/'
 app.config['JWT_COOKIE_CSRF_PROTECT'] = False  # Set to True for additional security
+app.config["JWT_ACCESS_TOKEN_EXPIRES"] = timedelta(hours=1)
 jwt = JWTManager(app)
 
 
@@ -44,7 +46,7 @@ def login():
     if user and check_password_hash(user[1], password):
         access_token = create_access_token(identity=username)
         response = make_response(redirect(url_for('dashboard')))
-        set_access_cookies(response, access_token, max_age=15 * 60)
+        set_access_cookies(response, access_token)
         flash('Login successful!', 'success')
         return response
     else:
@@ -73,6 +75,7 @@ def register():
 
 
 @app.route('/logout', methods=['POST'])
+@jwt_required_redirect
 def logout():
     response = make_response(redirect(url_for('login')))
     unset_jwt_cookies(response)
