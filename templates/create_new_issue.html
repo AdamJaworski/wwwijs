@@ -7,7 +7,7 @@
     <title>Formularz</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style_create_new_issue.css') }}">
-    <script src="{{ url_for('static', filename='js/script_dashboard.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/script_common.js') }}"></script>
 </head>
 
 <body class = "create_new_issue">
@@ -16,7 +16,7 @@
         <a href="/create_new_issue">Utwórz nowy problem</a>
         <a href="/dashboard">Zobacz tablicę Kanban</a>
         <a href="/viev_all_tasks">Zobacz wszystkie zgłoszenia</a>
-        <a href="/login">Zaloguj się</a>
+        <div class="a-like" onclick='logout()'>Wyloguj się</div>
         <!-- 
         <div class="div_button" onclick="openJoinOrgModal('create')">Stwórz organizację</div>
         <div class="div_button" onclick="openJoinOrgModal('join')">Dołącz do organizacji</div>

@@ -1,19 +1,19 @@
-html{
+html {
     height: 100%;
-  }
-  
-  * {
-      box-sizing: content-box;
-  }
+}
 
-  .create_new_issue {
-    height: 100%;
-    background: rgb(37, 48, 49);
-    display: flex;
-    flex-direction: row;
-  }
+* {
+  box-sizing: content-box;
+}
+
+.create_new_issue {
+height: 100%;
+background: rgb(37, 48, 49);
+display: flex;
+flex-direction: row;
+}
   
-  .create_new_issue .side_panel {
+.create_new_issue .side_panel {
     height: 100%;
     width: 10%;
     text-align: center;
@@ -21,26 +21,51 @@ html{
     display: flex;
     flex-direction: column;
     align-items: center;
-  }
+}
   
-  .side_panel > * {
-    margin: 5%;
-  }
+.side_panel > * {
+margin: 5%;
+}
 
-  .side_panel > *:first-child {
-      margin-top: 15px;
-  }
+.side_panel > *:first-child {
+  margin-top: 15px;
+}
   
-  .form_div {
+.form_div {
     background: rgb(37, 48, 49);
     color: rgb(243, 246, 246);
     height: 100%;
     display: flex;
     flex-direction: row;
     margin: 5%;
-  }
+}
   
-  a {
+a {
     color: rgba(255, 255, 255, .55);
+    text-decoration: none;
+}
+
+.button {
+    background-image: url('blank_profile.jpg');
+    background-size: cover;
+    border: none;
+    color: white;
+    padding: 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    border-radius: 100%;
+}
+
+.a-like {
+    color: rgba(255, 255, 255, .55);
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.a-like:hover {
+    color: rgba(255, 255, 255, .75);
     text-decoration: none;
 }
