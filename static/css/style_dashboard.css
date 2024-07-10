@@ -75,6 +75,10 @@ html{
   width: 20%;
 }
 
+.child > *:last-child {
+    margin-bottom: 15px;
+}
+
 .child::-webkit-scrollbar {
   width: 10px;
 }
