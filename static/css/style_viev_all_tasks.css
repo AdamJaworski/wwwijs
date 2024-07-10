@@ -56,6 +56,11 @@ a {
     text-decoration: none;
 }
 
+a:hover {
+    color: rgba(255, 255, 255, .75);
+    text-decoration: none;
+}
+
 .a-like {
     color: rgba(255, 255, 255, .55);
     text-decoration: none;
