@@ -20,6 +20,13 @@
                 <label for="password" style="color: rgb(243, 246, 246);">Password</label>
                 <input type="password" class="form-control" id="password" name="password" required>
             </div>
+            {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                        {% for message in messages %}
+                            <div style="color: red; margin-bottom: 2%;">{{ message }}</div>
+                        {% endfor %}
+                {% endif %}
+            {% endwith %}
             <button type="submit" class="action-button">Register</button>
         </form>
     </div>

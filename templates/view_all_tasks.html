@@ -28,7 +28,7 @@
         <h2 class="heder"> {{ org }} </h2>
         <div class="row" >
             {% for task in database.get_tasks_for_organization(org) %}
-            <div class="col">
+            <div class="col" style="margin-bottom: 1%;">
                 <div class="card">
                     <div class="card-body">
                         <h3 class="card-title"> {{task.title}}</h3>

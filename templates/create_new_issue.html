@@ -54,9 +54,17 @@
                 {% endfor %}
             </select>
             <br>
+            {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                        {% for message in messages %}
+                            <div style="color: red; margin-bottom: 25px;">{{ message }}</div>
+                        {% endfor %}
+                {% endif %}
+            {% endwith %}
             <button type="submit" class="action-button">Wyślij</button>
         </form>
     </div>
+
     
 </body>
 

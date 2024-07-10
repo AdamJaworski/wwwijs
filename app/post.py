@@ -15,7 +15,6 @@ def login():
         response = make_response(redirect(url_for('get.dashboard')))
         set_access_cookies(response, access_token)
         set_refresh_cookies(response, refresh_token)
-        flash('Login successful!', 'success')
         return response
     else:
         flash('Invalid username or password', 'danger')
@@ -38,15 +37,17 @@ def register():
     password = request.form.get('password')
 
     if len(username) == 0 or len(password) == 0:
-        return "You need to provide both username and password", 401
+        flash("User already exists")
+        return redirect(url_for('You need to provide both username and password'))
 
     hashed_password = generate_password_hash(password)
     try:
         database.add_user(username, hashed_password)
     except IntegrityError:
-        return jsonify({"msg": "User already exists"}), 400
+        flash("User already exists")
+        return redirect(url_for('get.register'))
 
-    return jsonify({"msg": "User created successfully"}), 201
+    return redirect(url_for('get.login'))
 
 
 @post.route('/logout', methods=['POST'])
@@ -61,13 +62,17 @@ def logout():
 @post.route('/create_new_issue', methods=['POST'])
 @jwt_required_redirect
 def create_new_issue():
-    title = request.form.get('title')
-    description = request.form.get('description')
-    organization = request.form.get('organization_name')
-    status = int(request.form.get('status'))
-    priority = int(request.form.get('priority'))
-    database.add_task(status, description, organization, priority, title)
-    return redirect(url_for('get.dashboard'))
+    try:
+        title = request.form.get('title')
+        description = request.form.get('description')
+        organization = request.form.get('organization_name')
+        status = int(request.form.get('status'))
+        priority = int(request.form.get('priority'))
+        database.add_task(status, description, organization, priority, title)
+        return redirect(url_for('get.dashboard'))
+    except Exception as error:
+        flash(str(error), 'warning')
+        return redirect(url_for('get.create_new_issue'))
 
 
 @post.route('/get_tasks', methods=['POST'])
