@@ -2,6 +2,54 @@ html, body {
   height: 100%;
 }
 
-* {
-  box-sizing: content-box;
+input {
+    background: rgb(243, 246, 246);
 }
+
+*::-webkit-scrollbar {
+  width: 10px;
+}
+
+*::-webkit-scrollbar-track {
+  background: inherit;
+}
+
+*::-webkit-scrollbar-thumb {
+  background: #676767;
+
+}
+
+*::-webkit-scrollbar-thumb:hover {
+  background: #474646;
+}
+
+body {
+    height: 100%;
+    background: rgb(37, 48, 49);
+    display: flex;
+    flex-direction: row;
+}
+
+body .side-panel {
+    background: #212529;
+    height: 100%;
+    width: 11%;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.side-panel > * {
+  margin: 5%;
+}
+
+.side-panel > *:first-child {
+    margin-top: 15px;
+}
+
+body .main-panel {
+    width: 100%;
+    color: rgb(243, 246, 246);
+}
+

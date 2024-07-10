@@ -1,3 +1,7 @@
+function href_js(page) {
+    window.location.href = page;
+}
+
 function logout() {
     fetch('/logout', {
         method: 'POST',
@@ -5,7 +9,7 @@ function logout() {
             'Content-Type': 'application/json'
         }
     })
-    window.location.href = '/login'
+    window.location.href = '/login';
 }
 
 const REFRESH_INTERVAL = 14 * 60 * 1000;

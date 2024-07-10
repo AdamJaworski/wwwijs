@@ -6,7 +6,7 @@ function toggleSelectedState(event, org) {
     if (currentOrg == org)
         return
     currentOrg = org
-    const items = document.querySelectorAll('.org_button');
+    const items = document.querySelectorAll('.side-panel-active-button');
     items.forEach(item => item.classList.remove('selected'));
 
     const element = event.target;

@@ -1,0 +1,62 @@
+.profile {
+    background-image: url('blank_profile.jpg');
+    background-size: cover;
+    border: none;
+    padding: 20px;
+    border-radius: 100%;
+}
+
+.side-panel-button {
+    color: rgba(255, 255, 255, .55);
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.side-panel-button:hover {
+    color: rgba(255, 255, 255, .75);
+    text-decoration: none;
+}
+
+.side-panel-button-static {
+    cursor: pointer;
+    color: rgba(255, 255, 255, .95);
+}
+
+.side-panel-active-button {
+    color: rgba(255, 255, 255, .155);
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.side-panel-active-button.selected {
+    color: rgba(255, 255, 255, .95);
+}
+
+.action-button {
+    padding: 6px 14px;
+    font-family: -apple-system, BlinkMacSystemFont, 'Roboto', sans-serif;
+    border-radius: 6px;
+    border: none;
+    background: #6E6D70;
+    color: #DFDEDF;
+}
+
+.action-button:focus {
+  box-shadow: inset 0px 0.8px 0px -0.25px rgba(255, 255, 255, 0.2), 0px 0.5px 1px rgba(0, 0, 0, 0.1), 0px 0px 0px 3.5px rgba(58, 108, 217, 0.5);
+  outline: 0;
+}
+
+.close {
+    position: absolute;
+    top: 1%;
+    right: 2%;
+    color: #aaa;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover, .close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}

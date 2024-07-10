@@ -7,17 +7,18 @@
     <title>Formularz</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style_view_all_tasks.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style_common_buttons.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style_common.css') }}">
     <script src="{{ url_for('static', filename='js/script_common.js') }}"></script>
 </head>
 
 <body class="tasks_list">
     <div class="side_panel">
-        <button id="profile" class="button"></button>
-        <a href="/dashboard">Zobacz tablicę Kanban</a>
-        <a href="/create_new_issue">Utwórz nowy problem</a>
-        <a href="/view_all_tasks">Zobacz wszystkie zgłoszenia</a>
-        <div class="a-like" onclick='logout()'>Wyloguj się</div>
+        <button id="profile" class="profile"></button>
+        <div class="side-panel-button" onclick='href_js("/dashboard")'>Zobacz tablicę Kanban</div>
+        <div class="side-panel-button" onclick='href_js("/create_new_issue")'>Utwórz nowy problem</div>
+        <div class="side-panel-button" onclick='href_js("/view_all_tasks")'>Zobacz wszystkie zgłoszenia</div>
+        <div class="side-panel-button" onclick='logout()'>Wyloguj się</div>
     </div>
 
 

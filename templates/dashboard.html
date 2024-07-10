@@ -1,34 +1,38 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style_common.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style_common_buttons.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style_dashboard.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style_dashboard_buttons.css') }}">
     <script src="{{ url_for('static', filename='js/script_dashboard_events.js') }}"></script>
     <script src="{{ url_for('static', filename='js/script_dashboard_posts.js') }}"></script>
     <script src="{{ url_for('static', filename='js/script_common.js') }}"></script>
 </head>
-<body class="dashboard" onload="updateOrgs();">
-    <div class="side_panel">
-        <button id="profile" class="button"></button>
-        <a href="/dashboard">Zobacz tablicę Kanban</a>
-        <a href="/create_new_issue">Utwórz nowy problem</a>
-        <a href="/view_all_tasks">Zobacz wszystkie zgłoszenia</a>
-        <div class="a-like" onclick='logout()'>Wyloguj się</div>
-        <div class="div_button" onclick="openJoinOrgModal('create')" style='margin-top: 50%'>Stwórz organizację</div>
-        <div class="div_button" onclick="openJoinOrgModal('join')">Dołącz do organizacji</div>
+
+<body onload="updateOrgs()">
+
+    <div class="side-panel">
+        <button id="profile" class="profile"></button>
+        <div class="side-panel-button" onclick='href_js("/dashboard")'>Zobacz tablicę Kanban</div>
+        <div class="side-panel-button" onclick='href_js("/create_new_issue")'>Utwórz nowy problem</div>
+        <div class="side-panel-button" onclick='href_js("/view_all_tasks")'>Zobacz wszystkie zgłoszenia</div>
+        <div class="side-panel-button" onclick='logout()'>Wyloguj się</div>
+        <div class="side-panel-button-static" onclick="openJoinOrgModal('create')" style='margin-top: 50%'>Stwórz organizację</div>
+        <div class="side-panel-button-static" onclick="openJoinOrgModal('join')">Dołącz do organizacji</div>
         <div class="org_table" id="org_table"></div>
     </div>
-    <div class="sub_div">
+
+    <div class="main-panel">
         <div class="header">
             <h1 id="main-sign">Witaj, {{username}}!</h1>
             <hr class="my-4">
         </div>
-        <div class="lists_parent">
+        <div class="state-list">
             <div class="child" id="to_do" style="background: rgb(156, 124, 165)" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
             <div class="child" id="in_progress" style="background: rgb(173, 178, 211)" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
             <div class="child" id="in_testing" style="background: rgb(212, 180, 131)" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
@@ -36,8 +40,8 @@
         </div>
     </div>
 
-    <div id="joinOrgModal" class="modal-m">
-        <div class="modal-m-content">
+    <div id="joinOrgModal" class="modal-org-panel">
+        <div class="modal-org-panel-content">
             <span class="close" onclick="closeJoinOrgModal()">&times;</span>
             <form id="joinOrgForm" onsubmit="submitJoinOrgForm(event)">
                 <label for="orgName">Organization Name:</label>
@@ -45,8 +49,8 @@
                 <label for="orgPassword">Organization Password:</label>
                 <input type="password" id="orgPassword" name="orgPassword" required>
             </form>
-            <div type="submit" class="div_button_form" onclick="submitJoinOrgForm()" id="join" style="left: 45%">Join</div>
-            <div type="submit" class="div_button_form" onclick="submitCreateOrgForm()" id="create">Create</div>
+            <div type="submit" class="side-panel-button-static org-form-button" onclick="submitJoinOrgForm()" id="join" style="left: 45%">Join</div>
+            <div type="submit" class="side-panel-button-static org-form-button" onclick="submitCreateOrgForm()" id="create">Create</div>
         </div>
     </div>
 
@@ -60,11 +64,12 @@
             <div id="modal-task-priority"></div>
             <div id="modal-task-assigned_to"></div>
 
-            <div class="buttons">
-                <button class="button-action" role="button">Edit</button>
-                <button class="button-action" role="button" style="margin-left: 5px" id="delete-button">Delete</button>
+            <div class="task-buttons">
+                <button class="action-button" role="button">Edit</button>
+                <button class="action-button" role="button" style="margin-left: 5px" id="delete-button">Delete</button>
             </div>
         </div>
     </div>
+
 </body>
 </html>

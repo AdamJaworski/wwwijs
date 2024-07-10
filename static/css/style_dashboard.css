@@ -1,26 +1,18 @@
-.dashboard {
-  height: 100%;
-  background: rgb(37, 48, 49);
-  display: flex;
-  flex-direction: row;
+* {
+  box-sizing: content-box;
 }
 
-.dashboard .side_panel {
-  height: 100%;
-  width: 11%;
-  text-align: center;
-  background: #212529;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+.org-form-button {
+    position: absolute;
+    left: 40%;
+    margin-top: 10px;
 }
 
-.side_panel > * {
-  margin: 5%;
-}
-
-.side_panel > *:first-child {
-    margin-top: 15px;
+.task-buttons {
+    display: flex;
+    position: absolute;
+    bottom: 1%;
+    right: 1%;
 }
 
 .org_table {
@@ -38,18 +30,14 @@
     margin-bottom: 5px
 }
 
-.dashboard .sub_div {
-  width: 100%;
-}
-
-.sub_div .header {
+.main-panel .header {
   text-align: center;
   height: 5%;
   color: rgb(243, 246, 246);
   margin: 1%;
 }
 
-.sub_div .lists_parent {
+.main-panel .state-list {
   height: 85%;
   margin-top: 4%;
   display: flex;
@@ -57,7 +45,7 @@
   flex-direction: row;
 }
 
-.lists_parent .child {
+.state-list .child {
   vertical-align: middle;
   overflow-y: auto;
   overflow-x: clip;
@@ -71,27 +59,26 @@
     margin-bottom: 15px;
 }
 
-.child::-webkit-scrollbar {
-  width: 10px;
-}
-
-.child::-webkit-scrollbar-track {
-  background: inherit;
-}
-
-.child::-webkit-scrollbar-thumb {
-  background: #676767;
-
-}
-
-.child::-webkit-scrollbar-thumb:hover {
-  background: #474646;
-}
-
 .card {
   width: 90%;
   margin-left: 5%;
   margin-right: 5%;
+}
+
+.card[draggable="true"] {
+    cursor: grab;
+}
+
+.card[draggable="true"]:active {
+    cursor: grabbing;
+}
+
+.card-text {
+  font-size: 90%;
+}
+
+.card-header {
+  font-family: cursive;
 }
 
 .prio1body {
@@ -127,23 +114,7 @@
     background: rgb(56 87 113);
 }
 
-.card[draggable="true"] {
-    cursor: grab;
-}
-
-.card[draggable="true"]:active {
-    cursor: grabbing;
-}
-
-.card-text {
-  font-size: 90%;
-}
-
-.card-header {
-  font-family: cursive;
-}
-
-.modal-m {
+.modal-org-panel {
     display: none;
     justify-content: center;
     align-items: center;
@@ -155,7 +126,7 @@
     background-color: rgba(0, 0, 0, 0.5);
 }
 
-.modal-m-content {
+.modal-org-panel-content {
     background: rgb(73, 117, 120);
     color: rgb(243, 246, 246);
     border-radius: 5px;
@@ -165,10 +136,6 @@
     padding: 15px;
     padding-bottom: 45px;
     position: relative;
-}
-
-input {
-      background: rgb(243, 246, 246);
 }
 
 .modal-task {
