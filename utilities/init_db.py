@@ -100,4 +100,4 @@ if __name__ == "__main__":
     except Exception:
         pass
     init_data_db()
-    fill_with_random_orgs()
+    #fill_with_random_orgs()

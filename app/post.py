@@ -176,19 +176,30 @@ def create_org():
 @jwt_required_redirect_json
 def delete_task():
     username = get_jwt_identity()
-    user_orgs = database.get_user_orgs(username)
-    user_orgs = [org.org_name for org in user_orgs]
     task_id = request.json.get('task_id')
-    org_task = database.get_org_by_org_task_id(task_id)
+    status, msg = verify_user_perms_to_task(username, task_id, 5)
 
-    if org_task not in user_orgs:
-        return jsonify({'status': False, "msg": "User is not in org related to task"}), 400
-
-    if database.get_user_access_level(username, org_task) < 5:
-        return jsonify({'status': False, "msg": "You don't have enough permission to delete tasks!"}), 400
+    if not status:
+        return msg, 400
 
     database.delete_task(task_id)
     return jsonify({'status': True}), 201
+
+
+@post.route('/update_task', methods=['POST'])
+@jwt_required_redirect
+def update_task():
+    username = get_jwt_identity()
+    task_id = request.args.get('taskid')
+    status, msg = verify_user_perms_to_task(username, task_id, 1)
+
+    if not status:
+        return msg, 400
+
+    database.update_task(request.form.get('status'), request.form.get('description'),
+                         request.form.get('organization_name'), request.form.get('priority'), request.form.get('title'),
+                         task_id)
+    return make_response(redirect(url_for('get.dashboard')))
 
 
 @post.route('/view_all_tasks', methods=['POST'])

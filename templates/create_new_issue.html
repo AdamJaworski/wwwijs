@@ -10,9 +10,10 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style_common_buttons.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style_common.css') }}">
     <script src="{{ url_for('static', filename='js/script_common.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/script_create_new_issue.js') }}"></script>
 </head>
 
-<body>
+<body onload="getQueryParams()">
 
     <div class="side-panel">
         <button id="profile" class="profile" onclick='href_js("/profile")'></button>
@@ -24,7 +25,7 @@
 
     <div class="main-panel" style="color: rgb(243, 246, 246);">
         <div class="form-div">
-            <form method="POST" action="/create_new_issue">
+            <form method="POST" action="/create_new_issue" id="form">
                 <h1>Wypełnij formularz</h1>
                 <label for="title">Tytuł:</label>
                 <input type="text" id="title" class="form-control" name="title" maxlength="256" required>
@@ -62,7 +63,7 @@
                             {% endfor %}
                     {% endif %}
                 {% endwith %}
-                <button type="submit" class="action-button">Wyślij</button>
+                <button type="submit" class="action-button" id="submit-button">Wyślij</button>
             </form>
         </div>
     </div>

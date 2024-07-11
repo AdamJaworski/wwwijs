@@ -81,6 +81,7 @@ function updateOrgs() {
                     window.location.href = data.redirect;
                 }
             }
+
             data.orgs.forEach(org => {
                 var orgDiv = document.createElement('div');
                 orgDiv.className = 'side-panel-active-button';
@@ -191,8 +192,8 @@ function submitCreateOrgForm(event) {
     });
 }
 
-function openTaskModal(id) {
-    fetch('/get_task', {
+function getTaskByID(id) {
+    return fetch('/get_task', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -202,25 +203,9 @@ function openTaskModal(id) {
         })
     })
     .then(response => response.json())
-    .then(data => {
-        if (!data.status) {
-            if(data.redirect) {
-                window.location.href = data.redirect;
-            }
-        }
-        console.log('Task data:', data.task);
-        modal_task = document.getElementById('modal-task-content');
-        modal_task.className = `modal-task-content prio${data.task.priority}header`;
-        document.getElementById('modal-task-title').innerText = data.task.title;
-        document.getElementById('modal-task-description').innerText = data.task.description;
-        document.getElementById('modal-task-priority').innerText = `\nPriority: ${data.task.priority}`;
-        document.getElementById('modal-task-assigned_to').innerText = `Status: ${data.task.assigned_to}`;
-        document.getElementById('delete-button').onclick = (event) => deleteTask(data.task.task_id);
-    })
     .catch(error => {
         console.error('Error fetching task data:', error);
     });
-    document.getElementById('taskModal').style.display = 'flex';
 }
 
 function deleteTask(task_id) {

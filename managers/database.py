@@ -26,7 +26,7 @@ def assign_user_to_organization(cursor, username, org_name, access_level=None):
 @on_database_operation
 def add_task(cursor, table_id, description, org_name, priority, title):
     assert 0 < table_id < 5, "Wrong table id"
-    assert 0 < priority < 5, "Wrong priority" # TODO: to nie miało buć do 4? ? 
+    assert 0 < priority < 5, "Wrong priority"
     assert type(org_name) is str, "Wrong type of org name"
     assert type(title) is str, "Wrong type of title"
     assert type(description) is str, "Wrong type of description"
@@ -39,6 +39,13 @@ def add_task(cursor, table_id, description, org_name, priority, title):
 @on_database_operation
 def update_task_table(cursor, task_id, new_table):
     cursor.execute('UPDATE tasks SET table_id = ? WHERE id = ?', (new_table, task_id))
+
+
+@on_database_operation
+def update_task(cursor, table_id, description, org_name, priority, title, task_id):
+    create_date = 0
+    cursor.execute('UPDATE tasks SET table_id = ?, description = ?, org_name = ?, create_date = ?, priority = ?, '
+                   'title = ? WHERE id = ?', (table_id, description, org_name, create_date, priority, title, task_id))
 
 
 @on_database_operation

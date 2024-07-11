@@ -31,3 +31,17 @@ def jwt_required_redirect_json(fn):
             return jsonify({'status': False, 'redirect': url_for('get.login')})
         return fn(*args, **kwargs)
     return wrapper
+
+
+def verify_user_perms_to_task(username, task_id, req_access_lvl):
+    user_orgs = database.get_user_orgs(username)
+    user_orgs = [org.org_name for org in user_orgs]
+    org_task = database.get_org_by_org_task_id(task_id)
+
+    if org_task not in user_orgs:
+        return False, jsonify({'status': False, "msg": "User is not in org related to task"})
+
+    if database.get_user_access_level(username, org_task) < req_access_lvl:
+        return False, jsonify({'status': False, "msg": "You don't have enough permission to delete tasks!"})
+
+    return True, ''
