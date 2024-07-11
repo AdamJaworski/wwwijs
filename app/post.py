@@ -113,7 +113,12 @@ def get_task():
 @jwt_required_redirect_json
 def get_orgs():
     orgs = database.get_user_orgs(username=get_jwt_identity())
-    return jsonify({'status': True, 'orgs': orgs})
+    org_data = [{
+        'org_name': org.org_name,
+        'access_lvl': org.access_lvl
+    } for org in orgs
+    ]
+    return jsonify({'status': True, 'orgs': org_data})
 
 
 @post.route('/update_task_status', methods=['POST'])

@@ -39,6 +39,9 @@ def view_all_tasks():
     return render_template("view_all_tasks.html", username=current_user, database=database)
 
 
-
+@get.route('/profile', methods=['GET'])
+@jwt_required_redirect
+def profile():
+    return render_template('profile.html')
 
 

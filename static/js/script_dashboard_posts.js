@@ -84,9 +84,9 @@ function updateOrgs() {
             data.orgs.forEach(org => {
                 var orgDiv = document.createElement('div');
                 orgDiv.className = 'side-panel-active-button';
-                orgDiv.id = org;
-                orgDiv.onclick = (event) => toggleSelectedState(event, org);
-                orgDiv.innerText = org;
+                orgDiv.id = org.org_name;
+                orgDiv.onclick = (event) => toggleSelectedState(event, org.org_name);
+                orgDiv.innerText = org.org_name;
 
                 document.getElementById('org-table').appendChild(orgDiv);
             });

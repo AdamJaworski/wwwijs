@@ -27,8 +27,5 @@ class Task:
         self.title = title
         self.priority = priority
 
-    def move_to_right(self):
-        self.assigned_to += 1
-
     def __str__(self):
         return f"Task: id: {self.task_id}, title: {self.title}, table: {id_list[self.assigned_to]}"

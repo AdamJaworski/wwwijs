@@ -22,9 +22,9 @@
             </div>
             {% with messages = get_flashed_messages() %}
                 {% if messages %}
-                        {% for message in messages %}
-                            <div style="color: red; margin-bottom: 2%;">{{ message }}</div>
-                        {% endfor %}
+                    {% for message in messages %}
+                        <div style="color: red; margin-bottom: 2%;">{{ message }}</div>
+                    {% endfor %}
                 {% endif %}
             {% endwith %}
             <button type="submit" class="action-button">Register</button>

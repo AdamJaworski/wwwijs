@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style_common.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style_common_buttons.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style_profile.css') }}">
+    <script src="{{ url_for('static', filename='js/script_common.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/script_profile.js') }}"></script>
+</head>
+
+<body onload="updateOrgs()">
+    <div class="side-panel">
+        <button id="profile" class="profile" onclick='href_js("/profile")'></button>
+        <div class="side-panel-button" onclick='href_js("/dashboard")'>Zobacz tablicę Kanban</div>
+        <div class="side-panel-button" onclick='href_js("/create_new_issue")'>Utwórz nowy problem</div>
+        <div class="side-panel-button" onclick='href_js("/view_all_tasks")'>Zobacz wszystkie zgłoszenia</div>
+        <div class="side-panel-button" onclick='logout()'>Wyloguj się</div>
+    </div>
+    <div class="main-panel">
+        <div class="main-content" style=" text-align: center;">
+            <table id="org-table">
+                  <thead>
+                    <tr>
+                      <th scope="col">Organization Name</th>
+                      <th scope="col">Permission level</th>
+                      <th scope="col">Action</th>
+                    </tr>
+                  </thead>
+            </table>
+        </div>
+    </div>
+</body>
+</html>

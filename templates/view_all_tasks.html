@@ -12,9 +12,9 @@
     <script src="{{ url_for('static', filename='js/script_common.js') }}"></script>
 </head>
 
-<body class="tasks_list">
-    <div class="side_panel">
-        <button id="profile" class="profile"></button>
+<body>
+    <div class="side-panel">
+        <button id="profile" class="profile" onclick='href_js("/profile")'></button>
         <div class="side-panel-button" onclick='href_js("/dashboard")'>Zobacz tablicę Kanban</div>
         <div class="side-panel-button" onclick='href_js("/create_new_issue")'>Utwórz nowy problem</div>
         <div class="side-panel-button" onclick='href_js("/view_all_tasks")'>Zobacz wszystkie zgłoszenia</div>
@@ -22,31 +22,33 @@
     </div>
 
 
-    <div class="main_section" id="main_section" style="text-align: center;">
-        <h1 style="color:  rgb(243, 246, 246)"> Organizations and tasks</h1>
-        {% for org in database.get_user_orgs(username) %}
-        <h2 class="heder"> {{ org }} </h2>
-        <div class="row" >
-            {% for task in database.get_tasks_for_organization(org) %}
-            <div class="col" style="margin-bottom: 1%;">
-                <div class="card">
-                    <div class="card-body">
-                        <h3 class="card-title"> {{task.title}}</h3>
-                        <h4 class="mt-5"> Description:</h4>
-                        <p class="card-text">{{ task.description }} </p>
-                        <h4 class="mt-5"> Assigned to:</h4>
-                        <p>{{ database.get_users_from_task(task.task_id) }} </p>
-                        <form method="POST" action="/view_all_tasks">
-                            <button type="submit" name="assign_button" value="{{task.task_id}}"
-                                class="btn btn-primary">Assign to me</button>
-                        </form>
+    <div class="main-panel" id="main_section">
+        <div style="padding-left: 2%; width: 98%; text-align: center;">
+            <h1 style="color:  rgb(243, 246, 246)"> Organizations and tasks</h1>
+            {% for org in database.get_user_orgs(username) %}
+            <h2 class="heder" style="margin: 2%; color: rgb(243, 246, 246);"> {{ org }} </h2>
+            <div class="row" >
+                {% for task in database.get_tasks_for_organization(org) %}
+                <div class="col" style="padding-bottom: 1%;">
+                    <div class="card">
+                        <div class="card-body">
+                            <h3 class="card-title"> {{task.title}}</h3>
+                            <h4 class="mt-5"> Description:</h4>
+                            <p class="card-text">{{ task.description }} </p>
+                            <h4 class="mt-5"> Assigned to:</h4>
+                            <p>{{ database.get_users_from_task(task.task_id) }} </p>
+                            <form method="POST" action="/view_all_tasks">
+                                <button type="submit" name="assign_button" value="{{task.task_id}}"
+                                    class="btn btn-primary">Assign to me</button>
+                            </form>
+                        </div>
                     </div>
                 </div>
-            </div>
 
+                {% endfor %}
+            </div>
             {% endfor %}
         </div>
-        {% endfor %}
     </div>
 
 </body>

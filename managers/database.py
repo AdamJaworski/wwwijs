@@ -1,4 +1,4 @@
-from data_struct.task import Task
+from data_struct import Task, Org
 from managers.database_decorators import on_database_operation, get_from_database
 
 
@@ -72,9 +72,9 @@ def get_tasks_for_organization(cursor, org_name):
 
 @get_from_database
 def get_user_orgs(cursor, username):
-    cursor.execute('SELECT org_name FROM user_organizations WHERE username = ?', (username,))
+    cursor.execute('SELECT org_name, access_level FROM user_organizations WHERE username = ?', (username,))
     orgs = cursor.fetchall()
-    return [org[0] for org in orgs]
+    return [Org(org_name=row[0], access_lvl=row[1]) for row in orgs]
 
 
 @get_from_database
