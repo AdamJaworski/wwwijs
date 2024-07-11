@@ -29,3 +29,7 @@ td {
 thead, tfoot {
   background: rgb(44 63 65);
 }
+
+.leave-button {
+    margin-right: 2%;
+}

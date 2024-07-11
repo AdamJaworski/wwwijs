@@ -177,6 +177,7 @@ def create_org():
 def delete_task():
     username = get_jwt_identity()
     user_orgs = database.get_user_orgs(username)
+    user_orgs = [org.org_name for org in user_orgs]
     task_id = request.json.get('task_id')
     org_task = database.get_org_by_org_task_id(task_id)
 
@@ -199,3 +200,19 @@ def view_all_tasks():
         database.add_user_to_task(current_user, task_to_assign)
     response = make_response(redirect(url_for('get.view_all_tasks')))
     return response
+
+
+@post.route('/leave_org', methods=['POST'])
+@jwt_required_redirect_json
+def leave_org():
+    username = get_jwt_identity()
+    database.leave_org(username, request.json.get('org_name'))
+    return jsonify({'status': True}), 201
+
+
+@post.route('/get_ownership', methods=['POST'])
+@jwt_required_redirect_json
+def get_ownership():
+    username = get_jwt_identity()
+    database.change_user_permission(username, request.json.get('org_name'), 5)
+    return jsonify({'status': True}), 201

@@ -52,6 +52,11 @@ def delete_task(cursor, task_id):
 
 
 @on_database_operation
+def leave_org(cursor, username, org_name):
+    cursor.execute('DELETE FROM user_organizations WHERE username = ? AND org_name = ?', (username, org_name))
+
+
+@on_database_operation
 def add_user_to_task(cursor, username, task_id):
     cursor.execute('INSERT INTO user_task (username, task_id) VALUES (?, ?)', (username, task_id))
 
