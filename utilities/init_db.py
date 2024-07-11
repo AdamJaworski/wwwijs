@@ -2,9 +2,10 @@ import sqlite3
 import uuid
 import os
 import numpy as np
-from config import DATABASE_PATH
+from config import DATABASE_PATH, DATABASE_FOLDER_PATH
 from managers.database import *
 from werkzeug.security import generate_password_hash
+from pathlib import Path
 
 
 def init_data_db():
@@ -93,6 +94,7 @@ def fill_with_random_orgs():
 
 
 if __name__ == "__main__":
+    Path(DATABASE_FOLDER_PATH).mkdir(parents=True, exist_ok=True)
     try:
         os.remove(DATABASE_PATH)
     except Exception:

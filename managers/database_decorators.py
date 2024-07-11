@@ -1,5 +1,4 @@
 import sqlite3
-import database
 from config import DATABASE_PATH
 
 
